@@ -10,3 +10,4 @@ source: https://www.nobelprize.org/about/developer-zone-2/
 4. - php artisan key:generate
    - php artisan jwt:secret
 7. php artisan migrate
+
