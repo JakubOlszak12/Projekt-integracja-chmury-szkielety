@@ -1,17 +1,10 @@
 import styles from "../index.css"
 import React, {useEffect,useState} from 'react';
 import axios from 'axios'
-import ReactDOM from 'react-dom';
+
 const Main = () => {
     const [dane,ustawDane] = useState('')
-    const [userData, setData] = useState({
-        firstname: "",
-        lastname: "",
-        gender: "",
-        birth_date: "",
-        country: "",
-        wikipedia_address: "",
-    })
+
     
     const handleLogout = () => {
         localStorage.removeItem("token")
@@ -29,7 +22,7 @@ const Main = () => {
                 loopData += `<li>${json[i].fullName.en}</li>`
             }
             ustawDane(loopData)
-            setData(res);
+           
 }
 
     const handleStore = async (e) => {
