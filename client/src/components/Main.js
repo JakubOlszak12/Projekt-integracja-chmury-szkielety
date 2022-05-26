@@ -1,6 +1,6 @@
-import styles from "../index.css"
 import React, {useEffect,useState} from 'react';
 import axios from 'axios'
+import Wrapper from "../wrapper/PageBtnContainer";
 
 const Main = () => {
     const [dane,ustawDane] = useState('')
@@ -46,28 +46,26 @@ const Main = () => {
     }
 
     return (
-        <div className={styles.main_container}>
-            <nav className={styles.navbar}>
+        <Wrapper>
+        <div>
+            <nav >
                 <h1>MySite</h1>
-                <button className={styles.white_btn} onClick={handleLogout}>
+                <button className='btn btn-danger' onClick={handleLogout}>
                     Wyloguj się</button>
-
-                    <button className={styles.white_btn} onClick={handleReadJson}>
+                <button className='btn btn-container' onClick={handleReadJson}>
                     ReadLaureates</button>
-                    <button className={styles.white_btn} onClick={handleStore}>
+                <button className='btn btn-container' onClick={handleStore}>
                     StoreLaureates</button>
-                    <button className={styles.white_btn} onClick={handleReadPrizes}>
+                <button className='btn btn-container' onClick={handleReadPrizes}>
                     ReadPrizes</button>
-                    <button className={styles.white_btn} onClick={handeStorePrizes}>
+                <button className='btn btn-container' onClick={handeStorePrizes}>
                     StorePrizes</button>
-                    
             </nav>
             <div>
-            <ul dangerouslySetInnerHTML={{__html: dane}}></ul>
-               
+                <ul dangerouslySetInnerHTML={{__html: dane}}></ul>
             </div>
-
         </div>
+        </Wrapper>
     )
 }
 export default Main
