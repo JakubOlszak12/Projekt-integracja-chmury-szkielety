@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from "react-router-dom"
 import styles from "../index.css"
 import FormRow from "./FormRow";
+import Wrapper from "../wrapper/RegisterPage";
 
 const Login = () => {
     const [data, setData] = useState({ email: "", password: "" })
@@ -29,10 +30,8 @@ const Login = () => {
         }
     }
     return (
-        <div className={styles.login_container}>
-            <div className={styles.login_form_container}>
-                <div className={styles.left}>
-                    <form className={styles.form_container}
+        <Wrapper className='full-page'>
+            <form className='form'
                           onSubmit={handleSubmit}>
                         <h1>Logowanie</h1>
                         <FormRow
@@ -51,22 +50,20 @@ const Login = () => {
                         {error && <div
                             className={styles.error_msg}>{error}</div>}
                         <button type="submit"
-                                className={styles.green_btn}>
+                                className='btn btn-block'>
                             Zaloguj się
                         </button>
+                        <p>
+                            <h2>New Here ?</h2>
+                            <Link to="/signup">
+                                <button type="button"
+                                        className='member-btn'>
+                                    Sing Up
+                                </button>
+                            </Link>
+                        </p>
                     </form>
-                </div>
-                <div className={styles.right}>
-                    <h1>New Here ?</h1>
-                    <Link to="/signup">
-                        <button type="button"
-                                className={styles.white_btn}>
-                            Sing Up
-                        </button>
-                    </Link>
-                </div>
-            </div>
-        </div>
+                </Wrapper>
     )
 }
 export default Login;

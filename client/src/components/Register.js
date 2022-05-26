@@ -3,6 +3,7 @@ import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
 import styles from "../index.css"
 import FormRow from "./FormRow";
+import Wrapper from "../wrapper/RegisterPage";
 
 const Signup = () => {
     const [data, setData] = useState({
@@ -33,11 +34,8 @@ const Signup = () => {
         }
     }
     return (
-        <div className={styles.signup_container}>
-            <div className={styles.signup_form_container}>
-
-                <div className={styles.right}>
-                    <form className={styles.form_container}
+        <Wrapper className='full-page'>
+                    <form className='form'
                           onSubmit={handleSubmit}>
                         <h1>Zakładanie konta</h1>
                         <FormRow
@@ -61,22 +59,20 @@ const Signup = () => {
                         {error && <div
                             className={styles.error_msg}>{error}</div>}
                         <button type="submit"
-                                className={styles.green_btn}>
+                                className='btn btn-block'>
                             Zaloguj się
                         </button>
+                        <p>
+                            <h2>Witaj z powrotem</h2>
+                            <Link to="/login">
+                                <button type="button"
+                                        className='member-btn'>
+                                    Sing in
+                                </button>
+                            </Link>
+                        </p>
                     </form>
-                </div>
-                <div className={styles.left}>
-                    <h1>Witaj z powrotem</h1>
-                    <Link to="/login">
-                        <button type="button"
-                                className={styles.white_btn}>
-                            Sing in
-                        </button>
-                    </Link>
-                </div>
-            </div>
-        </div>
+        </Wrapper>
     );
 };
 export default Signup
