@@ -17,7 +17,8 @@ class NobelPrize extends Model
         'category',
         'prize',
         'prize_adjusted',
-        'motivation'
+        'motivation',
+        'laureate_id',
     ];
 
 
@@ -28,9 +29,9 @@ class NobelPrize extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'award_year' => 'integer',
         'prize' => 'integer',
-        'prize_adjusted' => 'integer'
+        'prize_adjusted' => 'integer',
+        'laureate_id' => 'BigInteger'
     ];
 
     public function laureate(){

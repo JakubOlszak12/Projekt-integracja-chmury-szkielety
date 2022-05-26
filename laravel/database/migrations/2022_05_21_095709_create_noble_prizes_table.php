@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('noble_prizes', function (Blueprint $table) {
+        Schema::create('nobel_prizes', function (Blueprint $table) {
             $table->id();
-            $table->integer("award_year");
+            $table->string("award_year");
             $table->string("category");
             $table->integer("prize");
             $table->integer("prize_adjusted");
-            $table->string("motivation");
-            $table->unsignedBigInteger('laureate_id');
+            $table->string("motivation", 500);
+            $table->unsignedBigInteger('laureate_id')->nullable();
             $table->foreign('laureate_id')
             ->references('id')
             ->on('laureates')
