@@ -10,6 +10,7 @@ const Main = () => {
         localStorage.removeItem("token")
         window.location.reload()
     }
+    
     const handleReadJson = async (e) => {
             const url = "http://localhost:8000/api/auth/laureates"
             const { data: res } = await  axios.get(url)
@@ -50,6 +51,7 @@ const Main = () => {
                 <h1>MySite</h1>
                 <button className={styles.white_btn} onClick={handleLogout}>
                     Wyloguj się</button>
+
                     <button className={styles.white_btn} onClick={handleReadJson}>
                     ReadLaureates</button>
                     <button className={styles.white_btn} onClick={handleStore}>
@@ -64,6 +66,7 @@ const Main = () => {
             <ul dangerouslySetInnerHTML={{__html: dane}}></ul>
                
             </div>
+
         </div>
     )
 }
