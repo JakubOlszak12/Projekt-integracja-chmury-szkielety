@@ -1,12 +1,20 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
+import Main from "./components/Main"
+import Register from "./components/Register"
+import Login from "./components/Login"
+
 
 function App() {
-  return (
+    const user = localStorage.getItem("token")
+
+    return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<div>XD</div>}/>
-        <Route path='/register' element={<div>register</div>}/>
-      </Routes>
+        <Routes>
+            {user && <Route path="/" exact element={<Main />} />}
+            <Route path="/signup" exact element={<Register />} />
+            <Route path="/login" exact element={<Login />} />
+            <Route path="/" element={<Navigate replace to="/login" />} />
+        </Routes>
     </BrowserRouter>
   );
 }
