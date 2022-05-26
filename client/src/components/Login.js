@@ -1,7 +1,6 @@
 import { useState } from "react"
 import axios from 'axios'
 import { Link } from "react-router-dom"
-import styles from "../index.css"
 import FormRow from "./FormRow";
 import Wrapper from "../wrapper/RegisterPage";
 
@@ -14,7 +13,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const url = "http://localhost:8080/api/auth"
+            const url = "http://localhost:8000/api/auth/login"
             const { data: res } = await axios.post(url, data)
             localStorage.setItem("token", res.data)
             window.location = "/"
@@ -26,7 +25,6 @@ const Login = () => {
             ) {
                 setError(error.response.data.message)
             }
-
         }
     }
     return (
@@ -44,20 +42,16 @@ const Login = () => {
                             type='password'
                             name='password'
                             value={data.password}
-                            onChange={handleChange}
+                            handleChange={handleChange}
                         />
-
-                        {error && <div
-                            className={styles.error_msg}>{error}</div>}
-                        <button type="submit"
-                                className='btn btn-block'>
+                        {error && <div>{error}</div>}
+                        <button type="submit" className='btn btn-block'>
                             Zaloguj się
                         </button>
                         <p>
-                            <h2>New Here ?</h2>
+                            New Here ?
                             <Link to="/signup">
-                                <button type="button"
-                                        className='member-btn'>
+                                <button type="button" className='member-btn'>
                                     Sing Up
                                 </button>
                             </Link>

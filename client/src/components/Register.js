@@ -1,7 +1,6 @@
 import { useState } from "react"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
-import styles from "../index.css"
 import FormRow from "./FormRow";
 import Wrapper from "../wrapper/RegisterPage";
 
@@ -10,6 +9,7 @@ const Signup = () => {
         name: "",
         email: "",
         password: "",
+        password_confirmation: "",
     })
     const [error, setError] = useState("")
     const navigate = useNavigate()
@@ -56,17 +56,20 @@ const Signup = () => {
                             value={data.password}
                             handleChange={handleChange}
                         />
-                        {error && <div
-                            className={styles.error_msg}>{error}</div>}
-                        <button type="submit"
-                                className='btn btn-block'>
+                        <FormRow
+                            type='password'
+                            name='password_confirmation'
+                            value={data.password_confirmation}
+                            handleChange={handleChange}
+                        />
+                        {error && <div>{error}</div>}
+                        <button type="submit" className='btn btn-block'>
                             Zaloguj się
                         </button>
                         <p>
-                            <h2>Witaj z powrotem</h2>
+                            Witaj z powrotem
                             <Link to="/login">
-                                <button type="button"
-                                        className='member-btn'>
+                                <button type="button" className='member-btn'>
                                     Sing in
                                 </button>
                             </Link>
