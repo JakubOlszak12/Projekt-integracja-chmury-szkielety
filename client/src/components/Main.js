@@ -61,7 +61,7 @@ const Main = () => {
                 <button className='btn btn-container' onClick={handeStorePrizes}>
                     StorePrizes</button>
             </nav>
-            <div>
+            <div className='content'>
                 <ul dangerouslySetInnerHTML={{__html: dane}}></ul>
             </div>
         </div>

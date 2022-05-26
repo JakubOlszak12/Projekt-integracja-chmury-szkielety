@@ -9,6 +9,9 @@ const Wrapper = styled.section`
   h3 {
     margin-top: 0;
   }
+  .content {
+ 
+  }
   .form {
     margin: 0;
     border-radius: 0;
@@ -29,6 +32,7 @@ const Wrapper = styled.section`
     height: 35px;
     margin-top: 1rem;
   }
+
   .btn-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -38,6 +42,14 @@ const Wrapper = styled.section`
     button {
       height: 35px;
     }
+  }
+   .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0 0.5rem;
+    position: relative;
+    box-shadow: var(--shadow-2);
   }
   .clear-btn {
     background: var(--grey-500);
