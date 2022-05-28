@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react';
+import React, {useContext,createContext, useState} from 'react';
 import axios from "axios";
 
 export const AppContext = createContext();
@@ -30,15 +30,34 @@ const AppContextProvider = (props) => {
                 'Authorization': `Bearer ${token}`
             }
         })
-        var json = res['laureates'];
-        console.log(json);
-        var loopData = ''
-        var i;
-        for (i = 0; i < json.length; i++) {
-            if (json[i].hasOwnProperty('givenName')) loopData += `<li>${json[i].fullName.en}</li>`
-        }
-        ustawDane(loopData)
 
+        let json = res['laureates'];
+        console.log(json[0])
+        const jsonArr = [];
+
+        for (let i = 0; i < json.length; i++) {
+            const person = json[i]
+            //TODO walidacja
+            if (person.hasOwnProperty('givenName') &&
+                person.hasOwnProperty('familyName') &&
+                person.hasOwnProperty('gender') &&
+                person.hasOwnProperty('birth'))
+            {
+                let Dateparts = person.birth.date.split('-');
+                var date = new Date(Dateparts[0], Dateparts[1] - 1, Dateparts[2]);
+
+                jsonArr.push({
+                    column1: person.fullName.en,
+                    column2: person.familyName.en,
+                    column3: person.gender,
+                    column4: date,
+                  //  column5: person.birth.place.countryNow.en,
+                    column6: person.wikipedia.english
+                })
+            }
+        }
+
+        console.log(jsonArr)
     }
 
     const handleStore = async () => {
@@ -93,4 +112,8 @@ const AppContextProvider = (props) => {
     );
 }
 
-export default AppContextProvider
+const useAppContext = () => {
+    return useContext(AppContext)
+}
+
+export {AppContextProvider,useAppContext,}

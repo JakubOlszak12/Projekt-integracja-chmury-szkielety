@@ -17,8 +17,6 @@ class LaureateController extends Controller
 
     public function index()
     {
-
-
         $laureates = json_decode(file_get_contents(storage_path() . "/laureates.json"),true);
 
         $formatter = Formatter::make(file_get_contents(storage_path() . "/laureates.json"), Formatter::JSON);

@@ -9,9 +9,18 @@ const Wrapper = styled.section`
   h3 {
     margin-top: 0;
   }
-  .content {
  
-  }
+  table {
+  border-spacing: 0;
+}
+
+td {
+  padding: 2px 5px;
+}
+
+.jsonOdd {
+  background: #eee;
+}
   .form {
     margin: 0;
     border-radius: 0;

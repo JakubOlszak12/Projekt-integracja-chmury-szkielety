@@ -41,6 +41,11 @@ const Navbar = () => {
                                 StorePrizes
                             </button>
                         </NavbarLink>
+                        <NavbarLink to='/user'>
+                            <button className='btn btn-info' onClick={handleLogout}>
+                                Profile
+                            </button>
+                        </NavbarLink>
                         <OpenLinksButton
                             onClick={() => {
                                 setExtendNavbar((curr) => !curr);
@@ -52,11 +57,7 @@ const Navbar = () => {
                 </LeftContainer>
                 <RightContainer>
                     <NavbarLinkContainer>
-                        <NavbarLink to='/user'>
-                            <button className='btn btn-info' onClick={handleLogout}>
-                                Profile
-                            </button>
-                        </NavbarLink>
+
                         <button className='btn btn-danger' onClick={handleLogout}>
                             Wyloguj się
                         </button>
@@ -77,6 +78,9 @@ const Navbar = () => {
                         </button>
                         <button className='btn btn-container' onClick={handeStorePrizes}>
                             StorePrizes
+                        </button>
+                        <button className='btn btn-info' onClick={handleLogout}>
+                            Profile
                         </button>
                     </NavbarExtendedContainer>
                 )

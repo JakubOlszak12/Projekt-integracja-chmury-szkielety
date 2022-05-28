@@ -1,6 +1,8 @@
 import React, {useContext} from 'react';
-import Wrapper from "../wrapper/PageBtnContainer";
+import Wrapper from "../wrapper/MainPageContainer";
 import {AppContext} from "../AppContext";
+import TablePage from "./TablePage";
+
 
 const Main = () => {
     const {dane} = useContext(AppContext)
@@ -12,7 +14,7 @@ const Main = () => {
                     <h1>MySite</h1>
                 </nav>
                 <div className='content'>
-                    <ul dangerouslySetInnerHTML={{__html: dane}}></ul>
+                    <TablePage />
                 </div>
             </div>
         </Wrapper>

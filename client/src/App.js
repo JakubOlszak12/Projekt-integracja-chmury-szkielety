@@ -4,7 +4,7 @@ import Register from "./components/Register"
 import Login from "./components/Login"
 import UserProfile from "./components/UserProfile"
 import Navbar from "./components/Navbar";
-import AppContextProvider from "./AppContext";
+import {AppContextProvider} from "./AppContext";
 
 function App() {
     const user = localStorage.getItem("token")
