@@ -12,8 +12,12 @@ const Main = () => {
     }
     
     const handleReadJson = async (e) => {
-            const url = "http://localhost:8000/api/auth/laureates"
-            const { data: res } = await  axios.get(url)
+            const url = "http://localhost:8000/api/laureates"
+            const token = localStorage.getItem("token");
+            console.log(token)
+            const { data: res } = await  axios.get(url,{headers:{
+                'Authorization': `Bearer ${token}`
+            }})
             var json = res['laureates'];
             console.log(json);
             var loopData = ''
@@ -27,22 +31,35 @@ const Main = () => {
 }
 
     const handleStore = async (e) => {
-        const url = "http://localhost:8000/api/auth/jsonToDatabase"
-        const { data: res } = await  axios.post(url)
-        console.log(res);
+        const url = "http://localhost:8000/api/jsonToDatabase"
+        const token = localStorage.getItem("token");
+        console.log(token)
+        const { data: res } = await  axios.post(url,{},{headers:{
+            'Authorization': `Bearer ${token}`
+        }})
+        console.log(res)
+        
     }
 
     const handleReadPrizes = async (e) => {
-        const url = "http://localhost:8000/api/auth/prizes"
-        const { data: res } = await  axios.get(url)
+        const url = "http://localhost:8000/api/prizes"
+        const token = localStorage.getItem("token");
+        
+        const { data: res } = await  axios.get(url,{headers:{
+            'Authorization': `Bearer ${token}`
+        }})
         const json = res['nobelPrizes']
         console.log(json);
     }
 
     const handeStorePrizes = async (e) => {
-        const url = "http://localhost:8000/api/auth/prizesToDatabase"
-        const { data: res } = await  axios.post(url)
-        console.log(res);
+        const url = "http://localhost:8000/api/prizesToDatabase"
+        const token = localStorage.getItem("token");
+        console.log(token);
+        
+        const { data: res } = await  axios.post(url,{},{headers:{
+            'Authorization': `Bearer ${token}`
+        }})
     }
 
     return (
