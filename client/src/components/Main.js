@@ -7,8 +7,16 @@ const Main = () => {
     const [dane, ustawDane] = useState('')
 
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        const url = "http://localhost:8000/api/logout"
+        const json = JSON.stringify({token:`${localStorage.getItem("token")}`})
+        console.log(json)
+        const {data: res} = await axios.post(url, json,{headers:{
+            'Content-Type': 'application/json'
+          }})
+        console.log(res)
         localStorage.removeItem("token")
+        localStorage.removeItem("user")
         window.location.reload()
     }
 
@@ -80,6 +88,7 @@ const Main = () => {
             }
         })
         localStorage.setItem('user', JSON.stringify(res))
+        
     }
 
 
