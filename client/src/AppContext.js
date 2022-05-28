@@ -1,20 +1,20 @@
-import React, {useContext, useState} from 'react';
-import axios from 'axios'
-import Wrapper from "../wrapper/PageBtnContainer";
-import {Link} from "react-router-dom"
-import {AppContext} from "../AppContext";
+import React, {createContext, useState} from 'react';
+import axios from "axios";
 
-const Main = () => {
-    const {dane} = useContext(AppContext)
+export const AppContext = createContext();
 
+const AppContextProvider = (props) => {
+    const [dane, ustawDane] = useState('')
 
     const handleLogout = async () => {
         const url = "http://localhost:8000/api/logout"
-        const json = JSON.stringify({token:`${localStorage.getItem("token")}`})
+        const json = JSON.stringify({token: `${localStorage.getItem("token")}`})
         console.log(json)
-        const {data: res} = await axios.post(url, json,{headers:{
-            'Content-Type': 'application/json'
-          }})
+        const {data: res} = await axios.post(url, json, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
         console.log(res)
         localStorage.removeItem("token")
         localStorage.removeItem("user")
@@ -35,8 +35,7 @@ const Main = () => {
         var loopData = ''
         var i;
         for (i = 0; i < json.length; i++) {
-            if (json[i].hasOwnProperty('givenName'))
-                loopData += `<li>${json[i].fullName.en}</li>`
+            if (json[i].hasOwnProperty('givenName')) loopData += `<li>${json[i].fullName.en}</li>`
         }
         ustawDane(loopData)
 
@@ -80,38 +79,11 @@ const Main = () => {
         })
     }
 
-
-
     return (
-        <Wrapper>
-            <div>
-                <nav>
-                    <h1>MySite</h1>
-                    <button className='btn btn-danger' onClick={handleLogout}>
-                        Wyloguj się
-                    </button>
-                    <button className='btn btn-container' onClick={handleReadJson}>
-                        ReadLaureates
-                    </button>
-                    <button className='btn btn-container' onClick={handleStore}>
-                        StoreLaureates
-                    </button>
-                    <button className='btn btn-container' onClick={handleReadPrizes}>
-                        ReadPrizes
-                    </button>
-                    <button className='btn btn-container' onClick={handeStorePrizes}>
-                        StorePrizes
-                    </button>
-                    <Link to='/user'>
-                        <button className='btn btn-container'>Profile</button>
-                    </Link>
-
-                </nav>
-                <div className='content'>
-                    <ul dangerouslySetInnerHTML={{__html: dane}}></ul>
-                </div>
-            </div>
-        </Wrapper>
-    )
+        <AppContext.Provider value={{dane}}>
+            {props.children}
+        </AppContext.Provider>
+    );
 }
-export default Main
+
+export default AppContextProvider
