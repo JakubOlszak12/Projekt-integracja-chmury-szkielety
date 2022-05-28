@@ -79,17 +79,6 @@ const Main = () => {
         })
     }
 
-    const getUser = async () => {
-        const url = "http://127.0.0.1:8000/api/auth/user-profile"
-        const token = localStorage.getItem("token");
-        const {data: res} = await axios.get(url, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        localStorage.setItem('user', JSON.stringify(res))
-        
-    }
 
 
     return (
@@ -113,7 +102,7 @@ const Main = () => {
                         StorePrizes
                     </button>
                     <Link to='/user'>
-                        <button className='btn btn-container' onClick={getUser}>Profile</button>
+                        <button className='btn btn-container'>Profile</button>
                     </Link>
 
                 </nav>

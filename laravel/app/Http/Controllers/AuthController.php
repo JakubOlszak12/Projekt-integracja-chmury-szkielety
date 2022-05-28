@@ -26,14 +26,14 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         //valid credential
-        $validator = Validator::make($credentials, [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6|max:50'
-        ]);
-
-        //Send failed response if request is not valid
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
+        try{
+            $validator = Validator::make($credentials, [
+                'email' => 'required|email',
+                'password' => 'required|string|min:6|max:50'
+            ]);
+        } catch (error $e){
+            return response()->json(['error' => $validator->messages(),
+            'message' => 'Login credentials are invalid',], 200);
         }
 
         //Request is validated
@@ -46,7 +46,6 @@ class AuthController extends Controller
                 ], 400);
             }
         } catch (JWTException $e) {
-    	return $credentials;
             return response()->json([
                 	'success' => false,
                 	'message' => 'Could not create token.',
