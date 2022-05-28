@@ -80,7 +80,14 @@ const AppContextProvider = (props) => {
     }
 
     return (
-        <AppContext.Provider value={{dane}}>
+        <AppContext.Provider value={{
+            dane,
+            handleLogout,
+            handeStorePrizes,
+            handleReadPrizes,
+            handleStore,
+            handleReadJson
+        }}>
             {props.children}
         </AppContext.Provider>
     );
