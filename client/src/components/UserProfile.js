@@ -6,11 +6,13 @@ import {BsFillTrashFill} from 'react-icons/bs';
 
 
 const UserProfile = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
+   
+    var user = JSON.parse(localStorage.getItem('user'));
+    
 
+    
     const [name, setName] = useState(user.name || '')
     const [email, setEmail] = useState(user.email || '')
-
     const handleSubmit = (e) => {
         e.preventDefault()
         if (!name || !email) {
@@ -23,8 +25,10 @@ const UserProfile = () => {
     }
 
     const updateUser = async (currentUser) =>{
+        const user = JSON.parse(localStorage.getItem('user'));
         try {
-            const { data } = await axios.patch('/auth/updateUser', currentUser)
+            
+            const { data } = await axios.patch('/api/updateUser', currentUser)
 
             const { user, token } = data
 
@@ -59,12 +63,7 @@ const UserProfile = () => {
                         value={email}
                         handleChange={(e) => setEmail(e.target.value)}
                     />
-                    <FormRow
-                        type='password'
-                        name='password'
-                        value={password}
-                        handleChange={(e) => setPassword(e.target.value)}
-                    />
+                
                     <button className='btn btn-block' type='submit'>
                         save changes
                     </button>

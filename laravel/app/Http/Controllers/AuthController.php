@@ -16,7 +16,6 @@ class AuthController extends Controller
      * @return void
      */
 
-
     /**
      * Get a JWT via given credentials.
      *
@@ -53,11 +52,12 @@ class AuthController extends Controller
                 	'message' => 'Could not create token.',
                 ], 500);
         }
-
+        $request['name']=User::select("name")->where('email',$request->email)->get()[0]->name;
  		//Token created, return with success response and jwt token
         return response()->json([
             'success' => true,
             'token' => $token,
+            'user' => $request->only('email','name')
         ]);
     }
     /**
@@ -98,7 +98,7 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    public function logout(): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
         //valid credential
         $validator = Validator::make($request->only('token'), [
