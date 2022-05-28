@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import axios from 'axios'
 import Wrapper from "../wrapper/PageBtnContainer";
 import {Link} from "react-router-dom"
+import {AppContext} from "../AppContext";
 
 const Main = () => {
-    const [dane, ustawDane] = useState('')
+    const {dane} = useContext(AppContext)
 
 
     const handleLogout = async () => {
