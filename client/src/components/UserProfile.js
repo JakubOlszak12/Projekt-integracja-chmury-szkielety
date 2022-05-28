@@ -6,11 +6,9 @@ import {BsFillTrashFill} from 'react-icons/bs';
 
 
 const UserProfile = () => {
-   
-    var user = JSON.parse(localStorage.getItem('user'));
-    
 
-    
+    var user = JSON.parse(localStorage.getItem('user'));
+
     const [name, setName] = useState(user.name || '')
     const [email, setEmail] = useState(user.email || '')
     const handleSubmit = (e) => {
@@ -19,21 +17,16 @@ const UserProfile = () => {
             //show blad
             return
         }
-
-
-       updateUser({name,email})
+        updateUser({name, email})
     }
 
-    const updateUser = async (currentUser) =>{
-        const user = JSON.parse(localStorage.getItem('user'));
+    const updateUser = async (currentUser) => {
         try {
-            
-            const { data } = await axios.patch('/api/updateUser', currentUser)
-
-            const { user, token } = data
+            const {data} = await axios.patch('/api/updateUser', currentUser)
 
 
-            addUserToLocalStorage({ user, token })
+            const {user, token} = data
+            addUserToLocalStorage({user, token})
         } catch (error) {
             if (error.response.status !== 401) {
                 //xd
@@ -41,7 +34,7 @@ const UserProfile = () => {
         }
     }
 
-    const addUserToLocalStorage = ({ user, token }) => {
+    const addUserToLocalStorage = ({user, token}) => {
         localStorage.setItem('user', JSON.stringify(user))
         localStorage.setItem('token', token)
     }
@@ -63,7 +56,7 @@ const UserProfile = () => {
                         value={email}
                         handleChange={(e) => setEmail(e.target.value)}
                     />
-                
+
                     <button className='btn btn-block' type='submit'>
                         save changes
                     </button>
