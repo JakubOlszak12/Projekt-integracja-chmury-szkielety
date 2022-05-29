@@ -1,0 +1,49 @@
+version: '3.2'
+
+services:
+  server:
+    build: ./server
+    command: ./.docker/entrypoint.sh
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server:/server
+      - /server/node_modules
+      - /server/vendor
+    networks:
+      - server-network
+      - db
+    depends_on:
+      - "mysql"
+
+  client:
+    build: ./client
+    command: ./.docker/entrypoint.sh
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/client
+      - /client/node_modules
+    networks:
+      - server-network
+    depends_on:
+      - "server"
+
+  mysql:
+    build: ./.docker/mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.docker/dbdata:/var/lib/mysql
+      - ./.docker/mysql:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: ""
+    networks:
+      - db
+
+networks:
+  server-network:
+      driver: bridge
+  db:
