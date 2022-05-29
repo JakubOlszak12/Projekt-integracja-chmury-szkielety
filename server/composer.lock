@@ -371,18 +371,7 @@
         },
         {
             "name": "egulias/email-validator",
-<<<<<<< HEAD
-            "version": "3.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "ee0db30118f661fb166bcffbf5d82032df484697"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/ee0db30118f661fb166bcffbf5d82032df484697",
-                "reference": "ee0db30118f661fb166bcffbf5d82032df484697",
-=======
+
             "version": "3.2",
             "source": {
                 "type": "git",
@@ -393,7 +382,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/a5ed8d58ed0c340a7c2109f587951b1c84cf6286",
                 "reference": "a5ed8d58ed0c340a7c2109f587951b1c84cf6286",
->>>>>>> table
+
                 "shasum": ""
             },
             "require": {
@@ -440,11 +429,7 @@
             ],
             "support": {
                 "issues": "https://github.com/egulias/EmailValidator/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/egulias/EmailValidator/tree/3.1.2"
-=======
                 "source": "https://github.com/egulias/EmailValidator/tree/3.2"
->>>>>>> table
             },
             "funding": [
                 {
@@ -452,11 +437,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2021-10-11T09:18:27+00:00"
-=======
             "time": "2022-05-28T22:19:18+00:00"
->>>>>>> table
         },
         {
             "name": "fruitcake/php-cors",
@@ -1348,7 +1329,6 @@
         },
         {
             "name": "lcobucci/jwt",
-<<<<<<< HEAD
             "version": "4.1.5",
             "source": {
                 "type": "git",
@@ -1367,58 +1347,24 @@
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
                 "ext-sodium": "*",
-=======
-            "version": "4.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "55564265fddf810504110bd68ca311932324b0e9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/55564265fddf810504110bd68ca311932324b0e9",
-                "reference": "55564265fddf810504110bd68ca311932324b0e9",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "ext-openssl": "*",
->>>>>>> table
                 "lcobucci/clock": "^2.0",
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-<<<<<<< HEAD
                 "infection/infection": "^0.21",
                 "lcobucci/coding-standard": "^6.0",
                 "mikey179/vfsstream": "^1.6.7",
                 "phpbench/phpbench": "^1.0",
-=======
-                "infection/infection": "^0.20",
-                "lcobucci/coding-standard": "^6.0",
-                "mikey179/vfsstream": "^1.6",
-                "phpbench/phpbench": "^0.17",
->>>>>>> table
                 "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^0.12",
                 "phpstan/phpstan-deprecation-rules": "^0.12",
                 "phpstan/phpstan-phpunit": "^0.12",
                 "phpstan/phpstan-strict-rules": "^0.12",
                 "phpunit/php-invoker": "^3.1",
-<<<<<<< HEAD
                 "phpunit/phpunit": "^9.5"
             },
             "type": "library",
-=======
-                "phpunit/phpunit": "^9.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0-dev"
-                }
-            },
->>>>>>> table
+
             "autoload": {
                 "psr-4": {
                     "Lcobucci\\JWT\\": "src"
@@ -1442,11 +1388,8 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/lcobucci/jwt/tree/4.1.5"
-=======
-                "source": "https://github.com/lcobucci/jwt/tree/4.0.4"
->>>>>>> table
+
             },
             "funding": [
                 {
@@ -1458,11 +1401,8 @@
                     "type": "patreon"
                 }
             ],
-<<<<<<< HEAD
             "time": "2021-09-28T19:34:56+00:00"
-=======
-            "time": "2021-09-28T19:18:28+00:00"
->>>>>>> table
+
         },
         {
             "name": "league/commonmark",
