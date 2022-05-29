@@ -12,9 +12,8 @@ services:
       - /server/vendor
     networks:
       - server-network
-      - db
     depends_on:
-      - "mysql"
+      - "mysql-laravel"
 
   client:
     build: ./client
@@ -29,7 +28,7 @@ services:
     depends_on:
       - "server"
 
-  mysql:
+  mysql-laravel:
     build: ./.docker/mysql
     ports:
       - "3306:3306"
@@ -37,13 +36,11 @@ services:
       - ./.docker/dbdata:/var/lib/mysql
       - ./.docker/mysql:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ROOT_PASSWORD: "123"
     networks:
-      - db
+      - server-network
 
 networks:
   server-network:
       driver: bridge
-  db:
