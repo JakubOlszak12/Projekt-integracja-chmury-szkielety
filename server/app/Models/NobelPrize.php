@@ -31,7 +31,7 @@ class NobelPrize extends Model
     protected $casts = [
         'prize' => 'integer',
         'prize_adjusted' => 'integer',
-        'laureate_id' => 'BigInteger'
+        'laureate_id' => 'integer'
     ];
 
     public function laureate(){

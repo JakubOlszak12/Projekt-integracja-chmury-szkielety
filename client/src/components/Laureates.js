@@ -4,18 +4,20 @@ import {AppContext} from "../AppContext";
 import TablePage from "./TablePage";
 
 
-const Main = () => {
+const Laureates = () => {
     const {dane} = useContext(AppContext)
     const [buttonState, setButton] = useState(true)
     return (
         <Wrapper>
             <div>
                 <nav>
-                    <h1>Welcome!!</h1>
+                    <h1>MySite</h1>
                 </nav>
-                    
+                <div className='content'>
+                    <TablePage />
+                </div>
             </div>
         </Wrapper>
     )
 }
-export default Main
+export default Laureates

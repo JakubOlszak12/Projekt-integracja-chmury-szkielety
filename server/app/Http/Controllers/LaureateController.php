@@ -5,6 +5,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use SoapBox\Formatter\Formatter;
 use App\Models\Laureate;
+<<<<<<< HEAD
+=======
+use DB;
+>>>>>>> table
 class LaureateController extends Controller
 {
     /**
@@ -107,8 +111,16 @@ class LaureateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+<<<<<<< HEAD
     public function destroy($id)
     {
         //
+=======
+    public function destroy()
+    {
+        DB::statement("SET foreign_key_checks=0");
+        Laureate::truncate();
+        DB::statement("SET foreign_key_checks=1");
+>>>>>>> table
     }
 }

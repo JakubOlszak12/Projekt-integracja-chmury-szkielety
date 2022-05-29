@@ -15,13 +15,13 @@ import {AppContext} from "../AppContext";
 
 const Navbar = () => {
     const [extendNavbar, setExtendNavbar] = useState(false);
-    const {dane, handleReadJson, handleStore, handleReadPrizes, handeStorePrizes, handleLogout} = useContext(AppContext)
+    const {dane, handleReadJson, handleStore, handleReadPrizes, handeStorePrizes, handleLogout,handleReadPrizesFromDatabase} = useContext(AppContext)
 
     return (<NavbarContainer extendNavbar={extendNavbar}>
             <NavbarInnerContainer>
                 <LeftContainer>
                     <NavbarLinkContainer>
-                        <NavbarLink to="/">
+                        <NavbarLink to="/laureates">
                             <button className='btn btn-container' onClick={handleReadJson}>
                                 ReadLaureates
                             </button>
@@ -31,8 +31,8 @@ const Navbar = () => {
                                 StoreLaureates
                             </button>
                         </NavbarLink>
-                        <NavbarLink to="/">
-                            <button className='btn btn-container' onClick={handleReadPrizes}>
+                        <NavbarLink to="/prizes">
+                            <button className='btn btn-container' onClick={handleReadPrizesFromDatabase}>
                                 ReadPrizes
                             </button>
                         </NavbarLink>
@@ -41,8 +41,9 @@ const Navbar = () => {
                                 StorePrizes
                             </button>
                         </NavbarLink>
+                        
                         <NavbarLink to='/user'>
-                            <button className='btn btn-info' onClick={handleLogout}>
+                            <button className='btn btn-info'>
                                 Profile
                             </button>
                         </NavbarLink>
@@ -57,10 +58,12 @@ const Navbar = () => {
                 </LeftContainer>
                 <RightContainer>
                     <NavbarLinkContainer>
-
+                        
+                        <NavbarLink to='/'>
                         <button className='btn btn-danger' onClick={handleLogout}>
                             Wyloguj się
                         </button>
+                        </NavbarLink>
                     </NavbarLinkContainer>
                 </RightContainer>
             </NavbarInnerContainer>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\NobelPrize;
 use App\Models\Laureate;
+use DB;
 class NoblePrizeController extends Controller
 {
     /**
@@ -76,9 +77,17 @@ class NoblePrizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $record = [];
+        $prizes = NobelPrize::all();
+        foreach($prizes as $prize){
+            $laureate = Laureate::where('id', $prize['laureate_id'])->first();
+            $prize['laureate_name'] = $laureate['firstname']." ".$laureate['lastname'];
+            $prize['wikipedia'] = $laureate['wikipedia_address'];
+            unset($prize['laureate_id']);
+        }
+        return $prizes;
     }
 
     /**
@@ -110,8 +119,10 @@ class NoblePrizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        DB::statement("SET foreign_key_checks=0");
+        NobelPrize::truncate();
+        DB::statement("SET foreign_key_checks=1");
     }
 }

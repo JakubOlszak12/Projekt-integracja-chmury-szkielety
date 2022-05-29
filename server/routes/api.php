@@ -25,8 +25,6 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
 
-
-
 });
 
 Route::group(['middleware' => ['jwt.verify']], function() {
@@ -45,6 +43,9 @@ Route::patch('/updateProfileData', function (Request $request){
 });
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/user-profile', [AuthController::class, 'userProfile']);
+Route::post('/deleteAllLaureates', [LaureateController::class, 'destroy']);
+Route::post('/deleteAllPrizes', [NoblePrizeController::class, 'destroy']);
+Route::get('/PrizesFromDatabase', [NoblePrizeController::class, 'show']);
 });
 
 

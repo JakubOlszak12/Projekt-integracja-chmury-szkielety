@@ -9,7 +9,49 @@
 
 html {
   font-size: 100%;
+  max-height: 1000px !important;
 } /*16px*/
+
+td {
+  border: 1px solid;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+html, body, #app, #app>div {
+  height: 100%
+}
+.ka-table-wrapper {
+  max-height: 600px;
+}
+
+.ka-thead-cell-content.ka-pointer {
+  cursor: pointer;
+}
+
+table{
+  display: block;
+  height: 650px;
+  overflow-y: scroll;
+
+}
+
+.ka-tr.ka-thead-row{
+  text-align: left;
+}
+
+.ka-cell {
+  line-height: 17px;
+}
+.ka-empty-cell {
+  display: none;
+}
+.custom-cell-image{
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 25px;
+}
 
 :root {
   /* colors */
@@ -75,6 +117,7 @@ body {
   font-weight: 400;
   line-height: 1.75;
   color: var(--textColor);
+  height:100px !important;
 }
 
 p {
@@ -292,9 +335,10 @@ ul {
   width: var(--fluid-width);
   max-width: var(--max-width);
   margin: 0 auto;
+  max-height: 100px !important;
 }
 .full-page {
-  min-height: 100vh;
+  max-height: 1px !important;
 }
 
 .coffee-info {
