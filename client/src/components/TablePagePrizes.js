@@ -32,18 +32,19 @@ const CustomDateFilterEditor = ({
 
 
 const TablePage: React.FC = () => {
-    const {jsonData} = useContext(AppContext)
+    const {jsonPrizeData} = useContext(AppContext)
     const [tableProps, changeTableProps] = useState( {
         columns: [
-            { key: 'column1', title: 'First Name', dataType: DataType.String },
-            { key: 'column2', title: 'Last Name', dataType: DataType.String },
-            { key: 'column3', title: 'Gender', dataType: DataType.String, style:{textAlign:'center',} },
-            { key: 'column4', title: 'Birth Date', dataType: DataType.String, style:{textAlign:'center',} },
-            { key: 'column5', title: 'Born', dataType: DataType.String, style:{textAlign:'center',} },
-            { key: 'column6', title: 'Wiki', dataType: DataType.String },
+            { key: 'column1', title: 'Name', dataType: DataType.String },
+            { key: 'column2', title: 'Award Year', dataType: DataType.String },
+            { key: 'column3', title: 'Category', dataType: DataType.String, style:{textAlign:'center',} },
+            { key: 'column4', title: 'Prize', dataType: DataType.Int, style:{textAlign:'center',} },
+            { key: 'column5', title: 'PrizeAdjusted', dataType: DataType.Int, style:{textAlign:'center',} },
+            { key: 'column6', title: 'Motivation', dataType: DataType.String },
+            { key: 'column7', title: 'Wiki', dataType: DataType.String },
     
         ],
-        data: jsonData, //TODO przekazac dane
+        data: jsonPrizeData, //TODO przekazac dane
         rowKeyField: 'id',
         sortingMode: SortingMode.Single,
         filteringMode: FilteringMode.FilterRow,
@@ -59,5 +60,6 @@ const TablePage: React.FC = () => {
         />
     );
 };
+
 
 export default TablePage;

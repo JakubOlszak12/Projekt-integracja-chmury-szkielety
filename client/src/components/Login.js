@@ -19,8 +19,6 @@ const Login = () => {
                 localStorage.setItem("token", res.token)
                 localStorage.setItem("user",JSON.stringify(res.user))
                 window.location = "/"
-            
-            
         } catch (error) {
             if (
                 error.response &&
