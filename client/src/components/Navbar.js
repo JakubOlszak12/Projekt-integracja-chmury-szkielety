@@ -22,12 +22,12 @@ const Navbar = () => {
                 <LeftContainer>
                     <NavbarLinkContainer>
                         <NavbarLink to="/laureates">
-                            <button className='btn btn-container' onClick={handleReadJson}>
+                            <button className='btn btn-container'>
                                 ReadLaureates
                             </button>
                         </NavbarLink>
                         <NavbarLink to="/prizes">
-                            <button className='btn btn-container' onClick={handleReadPrizesFromDatabase}>
+                            <button className='btn btn-container'>
                                 ReadPrizes
                             </button>
                         </NavbarLink>
@@ -59,7 +59,7 @@ const Navbar = () => {
                 <RightContainer>
                     <NavbarLinkContainer>
                         
-                        <NavbarLink to='/'>
+                        <NavbarLink to='/login'>
                         <button className='btn btn-danger' onClick={handleLogout}>
                             Wyloguj się
                         </button>
@@ -70,11 +70,11 @@ const Navbar = () => {
             {
                 extendNavbar && (
                     <NavbarExtendedContainer>
-                        <button className='btn btn-container' onClick={handleReadJson}>
+                        <button className='btn btn-container'>
                             ReadLaureates
                         </button>
                  
-                        <button className='btn btn-container' onClick={handleReadPrizes}>
+                        <button className='btn btn-container'>
                             ReadPrizes
                         </button>
                         <button className='btn btn-container' onClick={handleDownloadXml}>
