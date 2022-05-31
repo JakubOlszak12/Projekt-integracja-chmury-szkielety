@@ -15,7 +15,7 @@ import {AppContext} from "../AppContext";
 
 const Navbar = () => {
     const [extendNavbar, setExtendNavbar] = useState(false);
-    const {dane, handleReadJson, handleStore, handleReadPrizes, handeStorePrizes, handleLogout,handleReadPrizesFromDatabase} = useContext(AppContext)
+    const {dane, handleReadJson, handleReadPrizes, handleLogout,handleReadPrizesFromDatabase} = useContext(AppContext)
 
     return (<NavbarContainer extendNavbar={extendNavbar}>
             <NavbarInnerContainer>
@@ -26,19 +26,9 @@ const Navbar = () => {
                                 ReadLaureates
                             </button>
                         </NavbarLink>
-                        <NavbarLink to="/">
-                            <button className='btn btn-container' onClick={handleStore}>
-                                StoreLaureates
-                            </button>
-                        </NavbarLink>
                         <NavbarLink to="/prizes">
                             <button className='btn btn-container' onClick={handleReadPrizesFromDatabase}>
                                 ReadPrizes
-                            </button>
-                        </NavbarLink>
-                        <NavbarLink to="/">
-                            <button className='btn btn-container' onClick={handeStorePrizes}>
-                                StorePrizes
                             </button>
                         </NavbarLink>
                         
@@ -73,15 +63,11 @@ const Navbar = () => {
                         <button className='btn btn-container' onClick={handleReadJson}>
                             ReadLaureates
                         </button>
-                        <button className='btn btn-container' onClick={handleStore}>
-                            StoreLaureates
-                        </button>
+                 
                         <button className='btn btn-container' onClick={handleReadPrizes}>
                             ReadPrizes
                         </button>
-                        <button className='btn btn-container' onClick={handeStorePrizes}>
-                            StorePrizes
-                        </button>
+                    
                         <button className='btn btn-info' onClick={handleLogout}>
                             Profile
                         </button>

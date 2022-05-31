@@ -8,6 +8,6 @@ php artisan config:clear
 php artisan view:clear
 php artisan key:generate
 php artisan jwt:secret
-php artisan migrate
+php artisan migrate:fresh --seed
 
 php artisan serve --host=0.0.0.0

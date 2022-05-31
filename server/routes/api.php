@@ -32,20 +32,14 @@ Route::group(['middleware' => ['jwt.verify']], function() {
         $laureates = file_get_contents(storage_path() . "/laureates.json");
         return $laureates;
  });
- Route::get('/prizes', function (Request $request){
-    $laureates = file_get_contents(storage_path() . "/nobelPrizes.json");
-    return $laureates;
-});
-Route::post('/prizesToDatabase',[NoblePrizeController::class, 'store']);
-Route::post('/jsonToDatabase',[LaureateController::class, 'store']);
 Route::patch('/updateProfileData', function (Request $request){
     return get_user();
 });
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/user-profile', [AuthController::class, 'userProfile']);
-Route::post('/deleteAllLaureates', [LaureateController::class, 'destroy']);
-Route::post('/deleteAllPrizes', [NoblePrizeController::class, 'destroy']);
 Route::get('/PrizesFromDatabase', [NoblePrizeController::class, 'show']);
+Route::get('/prizesExportToXML', [NoblePrizeController::class, 'store']);
+
 });
 
 

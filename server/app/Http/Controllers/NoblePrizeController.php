@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\NobelPrize;
 use App\Models\Laureate;
 use DB;
+use SoapBox\Formatter\Formatter;
+use Spatie\ArrayToXml\ArrayToXml;
 class NoblePrizeController extends Controller
 {
     /**
@@ -15,8 +17,8 @@ class NoblePrizeController extends Controller
      */
     public function index()
     {
-        //
-    }
+
+}
 
     /**
      * Show the form for creating a new resource.
@@ -32,43 +34,40 @@ class NoblePrizeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Responsephp
      */
     public function store(Request $request)
     {
-        $prizes = json_decode(file_get_contents(storage_path() . "/nobelPrizes.json"),true);
-        $data = [];
-        $laureates = Laureate::where('id' ,'>' ,0)->pluck('id')->toArray();
+        $array = [];
+        $formatter = Formatter::make($array, Formatter::ARR);
+        $arrayofarrays = [];
+        $prizes = NobelPrize::all();
+        $laureates = json_decode(file_get_contents(storage_path() . "/laureates.json"),true);
+        return print_r($laureates);
+        foreach($prizes as $prize){
+            $laureate = Laureate::where('id', $prize['laureate_id'])->first();
+            $record['Prize']['id'] = strval($prize['id']);
+            $record['Prize']['award_year'] = "_".strval($prize['award_year']);
+            $record['Prize']['category'] = strval($prize['category']);
+            $record['Prize']['prize'] = "_".strval($prize['prize']);
+            $record['Prize']['prize_adjusted'] = "_".strval($prize['prize_adjusted']);
+            $record['Prize']['motivation'] = trim(preg_replace('/\s+/', ' ', strval($prize['motivation'])));
+            $record['Prize']['laureate_name'] = $laureate['firstname']." ".$laureate['lastname'];
+            $record['Prize']['wikipedia'] = $laureate['wikipedia_address'];
+            array_push($array,$record);
 
-        foreach($prizes['nobelPrizes'] as $prize){
-            if(isset($prize['awardYear'])
-            && isset($prize['category']['en'])
-            && isset($prize['prizeAmount'])
-            && isset($prize['prizeAmountAdjusted'])
-            && isset($prize['laureates']))
-            {
-            $record = [];
-            $record['award_year'] = $prize['awardYear'];
-            $record['category'] = $prize['category']['en'];
-            $record['prize'] = $prize['prizeAmount'];
-            $record['prize_adjusted'] = $prize['prizeAmountAdjusted'];
-           foreach($prize['laureates'] as $laurate){
-                if(isset($laurate['id'])
-                && isset($laurate['motivation']['en'])){
-                    if(in_array($laurate['id'],$laureates)){
-                        $record['laureate_id'] = $laurate['id'];
-                    }
-                    else continue;
-                    $record['motivation'] = $laurate['motivation']['en'];
-
-                    array_push($data, $record);
-                }
-            }
         }
-    }
+        return print_r(array_values($array));
+        return ArrayToXml::convert(array_values($array));
+        array_push($arrayofarrays,$array);
+        return $arrayofarrays;
 
-    NobelPrize::insert($data);
-}
+        //return json_encode($array);
+        //$array = ["id" => "_1"];
+        //return $array;
+
+
+    }
 
 
     /**
