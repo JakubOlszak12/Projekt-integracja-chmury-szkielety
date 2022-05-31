@@ -9,8 +9,8 @@ const AppContextProvider = (props) => {
   
 
     useEffect(() =>{
-        setJSON(handleReadJson());
-        setJsonPrizeData(handleReadPrizesFromDatabase())
+        handleReadJson();
+        handleReadPrizesFromDatabase();
     },[])
 
         const [dane, ustawDane] = useState('')
@@ -67,46 +67,7 @@ const AppContextProvider = (props) => {
                 })
             }
         }
-       setJSON(jsonArr)
-    }
-
-    const handleStore = async () => {
-        const url = "http://localhost:8000/api/jsonToDatabase"
-        const token = localStorage.getItem("token");
-        console.log(token)
-        const {data: res} = await axios.post(url, {}, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        console.log(res)
-
-    }
-
-    const handleReadPrizes = async () => {
-        const url = "http://localhost:8000/api/prizes"
-        const token = localStorage.getItem("token");
-
-        const {data: res} = await axios.get(url, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        const json = res['nobelPrizes']
-        console.log(json);
-    }
-
-    const handeStorePrizes = async () => {
-        const url = "http://localhost:8000/api/prizesToDatabase"
-        const token = localStorage.getItem("token");
-        console.log(token);
-
-        const {} = await axios.post(url, {}, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        
+        setJSON(jsonArr)
     }
 
     const handleReadPrizesFromDatabase = async () => {
@@ -137,7 +98,6 @@ const AppContextProvider = (props) => {
                 })
             }
         }
-        console.log(jsonArr);
         setJsonPrizeData(jsonArr)
     }
 
@@ -145,9 +105,6 @@ const AppContextProvider = (props) => {
         <AppContext.Provider value={{
             dane,
             handleLogout,
-            handeStorePrizes,
-            handleReadPrizes,
-            handleStore,
             handleReadJson,
             jsonData,
             handleReadPrizesFromDatabase,

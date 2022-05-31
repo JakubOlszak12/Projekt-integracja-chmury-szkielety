@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Validator;
 use JWTAuth;
-
+use Response;
 class AuthController extends Controller
 {
     /**
@@ -152,7 +152,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             //'expires_in' => auth()->factory()->getTTL() * 60,
-            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'expires_in' => auth('api')->factory()->getTTL() * 600,
             'user' => auth()->user()
         ]);
     }
