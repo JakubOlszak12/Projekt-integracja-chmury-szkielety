@@ -32,6 +32,10 @@ const AppContextProvider = (props) => {
         
     }
 
+    const handleReadChartDataFromDB = async () => {
+
+    }
+
     const handleReadJson = async () => {
         const url = "http://localhost:8000/api/laureates"
         const token = localStorage.getItem("token");
@@ -108,6 +112,7 @@ const AppContextProvider = (props) => {
             handleReadJson,
             jsonData,
             handleReadPrizesFromDatabase,
+            handleReadChartDataFromDB,
             jsonPrizeData
         }}>
             {props.children}
