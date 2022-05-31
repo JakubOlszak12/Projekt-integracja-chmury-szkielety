@@ -1,5 +1,6 @@
 import React, {useContext,createContext, useState, useEffect} from 'react';
 import axios from "axios";
+import fileDownload from 'js-file-download'
 
 export const AppContext = createContext();
 
@@ -101,6 +102,31 @@ const AppContextProvider = (props) => {
         setJsonPrizeData(jsonArr)
     }
 
+    const handleDownloadXml = async () => {
+        const url = "http://localhost:8000/api/prizesExportToXML"
+        const token = localStorage.getItem("token");
+        const {data: res} = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) =>{
+            fileDownload(res.data, `prizes.xml`);
+        })
+    }
+
+    const handleDownloadJson= async () => {
+        const url = "http://localhost:8000/api/laureatesToJSON"
+        const token = localStorage.getItem("token");
+        const {data:result} = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+  
+        fileDownload(JSON.stringify(result), `laureates.json`);
+    }
+
+
     return (
         <AppContext.Provider value={{
             dane,
@@ -108,7 +134,9 @@ const AppContextProvider = (props) => {
             handleReadJson,
             jsonData,
             handleReadPrizesFromDatabase,
-            jsonPrizeData
+            jsonPrizeData,
+            handleDownloadXml,
+            handleDownloadJson
         }}>
             {props.children}
         </AppContext.Provider>

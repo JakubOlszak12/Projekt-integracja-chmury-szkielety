@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\NobelPrize;
 use App\Models\Laureate;
 use DB;
+use Illuminate\Support\Facades\Storage;
 use SoapBox\Formatter\Formatter;
 use Spatie\ArrayToXml\ArrayToXml;
 class NoblePrizeController extends Controller
@@ -39,32 +40,28 @@ class NoblePrizeController extends Controller
     public function store(Request $request)
     {
         $array = [];
-        $formatter = Formatter::make($array, Formatter::ARR);
-        $arrayofarrays = [];
+
+
         $prizes = NobelPrize::all();
-        $laureates = json_decode(file_get_contents(storage_path() . "/laureates.json"),true);
-        return print_r($laureates);
+
         foreach($prizes as $prize){
             $laureate = Laureate::where('id', $prize['laureate_id'])->first();
-            $record['Prize']['id'] = strval($prize['id']);
-            $record['Prize']['award_year'] = "_".strval($prize['award_year']);
-            $record['Prize']['category'] = strval($prize['category']);
-            $record['Prize']['prize'] = "_".strval($prize['prize']);
-            $record['Prize']['prize_adjusted'] = "_".strval($prize['prize_adjusted']);
-            $record['Prize']['motivation'] = trim(preg_replace('/\s+/', ' ', strval($prize['motivation'])));
-            $record['Prize']['laureate_name'] = $laureate['firstname']." ".$laureate['lastname'];
-            $record['Prize']['wikipedia'] = $laureate['wikipedia_address'];
+            $record['id'] = strval($prize['id']);
+            $record['award_year'] = strval($prize['award_year']);
+            $record['category'] = strval($prize['category']);
+            $record['prize'] = strval($prize['prize']);
+            $record['prize_adjusted'] = strval($prize['prize_adjusted']);
+            $record['motivation'] = trim(preg_replace('/\s+/', ' ', strval($prize['motivation'])));
+            $record['laureate_name'] = $laureate['firstname']." ".$laureate['lastname'];
+            $record['wikipedia'] = $laureate['wikipedia_address'];
             array_push($array,$record);
 
         }
-        return print_r(array_values($array));
-        return ArrayToXml::convert(array_values($array));
-        array_push($arrayofarrays,$array);
-        return $arrayofarrays;
-
-        //return json_encode($array);
-        //$array = ["id" => "_1"];
-        //return $array;
+        $json = json_encode($array,true);
+        $formatter = Formatter::make($json,Formatter::JSON);
+        $xml = $formatter->toXml();
+        return $xml;
+        //return $response;
 
 
     }
