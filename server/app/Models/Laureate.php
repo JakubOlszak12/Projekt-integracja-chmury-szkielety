@@ -37,7 +37,8 @@ class Laureate extends Model
         'id' => 'string'
     ];
 
-    public function nobelPrize(){
+    public function nobelPrize(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(NobelPrize::class);
     }
 
