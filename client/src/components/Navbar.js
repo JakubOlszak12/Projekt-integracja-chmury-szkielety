@@ -15,7 +15,7 @@ import {AppContext} from "../AppContext";
 
 const Navbar = () => {
     const [extendNavbar, setExtendNavbar] = useState(false);
-    const {dane, handleReadJson, handleReadPrizes, handleLogout,handleReadPrizesFromDatabase} = useContext(AppContext)
+    const {dane, handleReadJson, handleReadPrizes, handleLogout,handleReadPrizesFromDatabase,handleReadChartDataFromDB} = useContext(AppContext)
 
     return (<NavbarContainer extendNavbar={extendNavbar}>
             <NavbarInnerContainer>
@@ -23,15 +23,19 @@ const Navbar = () => {
                     <NavbarLinkContainer>
                         <NavbarLink to="/laureates">
                             <button className='btn btn-container' onClick={handleReadJson}>
-                                ReadLaureates
+                                Nobel Laureates
                             </button>
                         </NavbarLink>
                         <NavbarLink to="/prizes">
                             <button className='btn btn-container' onClick={handleReadPrizesFromDatabase}>
-                                ReadPrizes
+                                Nobel Prizes
                             </button>
                         </NavbarLink>
-                        
+                        <NavbarLink to="/charts">
+                            <button className='btn btn-container' onClick={handleReadChartDataFromDB}>
+                                Charts
+                            </button>
+                        </NavbarLink>
                         <NavbarLink to='/user'>
                             <button className='btn btn-info'>
                                 Profile

@@ -1,6 +1,5 @@
 import React, {useContext,useState} from 'react';
 import Wrapper from "../wrapper/MainPageContainer";
-import {AppContext} from "../AppContext";
 import TablePage from "./TablePagePrizes";
 
 
@@ -10,7 +9,7 @@ const Prizes = () => {
         <Wrapper>
             <div>
                 <nav>
-                    <h1>MySite</h1>
+                    <h1>Information about Nobel Prizes</h1>
                 </nav>
                 <div className='content'>
                     <TablePage/>
