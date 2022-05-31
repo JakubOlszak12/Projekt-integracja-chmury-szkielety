@@ -1,10 +1,12 @@
 import React, {useContext, useState } from 'react';
 import {AppContext, useAppContext} from "../AppContext";
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { DataType, EditingMode, SortingMode, FilteringMode, SortDirection, } from 'ka-table/enums';
+import { DataType, EditingMode, SortingMode, FilteringMode, SortDirection,ActionType, } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
+import { loadData, updateData } from 'ka-table/actionCreators';
 import { search, updateFilterRowValue } from 'ka-table/actionCreators';
 import { kaDateUtils } from 'ka-table/utils';
+import { hideLoading, showLoading } from 'ka-table/actionCreators';
 import axios from "axios";
 
 const CustomDateFilterEditor = ({
@@ -32,7 +34,6 @@ const CustomDateFilterEditor = ({
 
 
 const TablePage: React.FC = () => {
-    const {jsonPrizeData} = useContext(AppContext)
     const [tableProps, changeTableProps] = useState( {
         columns: [
             { key: 'column1', title: 'Name', dataType: DataType.String },
@@ -44,16 +45,49 @@ const TablePage: React.FC = () => {
             { key: 'column7', title: 'Wiki', dataType: DataType.String },
     
         ],
-        data: jsonPrizeData, //TODO przekazac dane
+        singleAction: loadData(),
         rowKeyField: 'id',
         sortingMode: SortingMode.Single,
         filteringMode: FilteringMode.FilterRow,
+        loading: {
+            enabled: true,
+            text: 'Loading data'
+          }
     });
-    const dispatch: DispatchFunc = (action) => {
+    const dispatch: DispatchFunc = async (action) => {
         changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+        if (action.type === ActionType.LoadData) {
+            const url = "http://localhost:8000/api/PrizesFromDatabase"
+            const token = localStorage.getItem("token");
+            const {data: res} = await axios.get(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            let json = res;
+            const jsonArr = [];
+    
+            for (let i = 0; i < json.length; i++) {
+                const prize = json[i]
+                {
+                    jsonArr.push({
+                        column1: prize.laureate_name,
+                        column2: prize.award_year,
+                        column3: prize.category,
+                        column4: prize.prize,
+                        column5: prize.prize_adjusted,
+                        column6: prize.motivation,
+                        column7: prize.wikipedia,
+                    })
+                }
+            }
+            dispatch(hideLoading());
+            dispatch(updateData(jsonArr));
+          }
     };
 
     return (
+        
         <Table
             {...tableProps}
             dispatch={dispatch}

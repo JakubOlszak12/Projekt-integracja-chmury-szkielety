@@ -39,7 +39,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/user-profile', [AuthController::class, 'userProfile']);
 Route::get('/PrizesFromDatabase', [NoblePrizeController::class, 'show']);
 Route::get('/prizesExportToXML', [NoblePrizeController::class, 'store']);
-
+Route::get('/laureatesToJSON', [LaureateController::class, 'store']);
 });
 
 

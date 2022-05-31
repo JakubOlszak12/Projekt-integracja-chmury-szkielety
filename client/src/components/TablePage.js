@@ -1,11 +1,13 @@
 import React, {useContext, useState } from 'react';
 import {AppContext, useAppContext} from "../AppContext";
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { DataType, EditingMode, SortingMode, FilteringMode, SortDirection, } from 'ka-table/enums';
+import { DataType, EditingMode, SortingMode, FilteringMode, SortDirection,ActionType, } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
+import { loadData, updateData } from 'ka-table/actionCreators';
 import { search, updateFilterRowValue } from 'ka-table/actionCreators';
 import { kaDateUtils } from 'ka-table/utils';
 import axios from "axios";
+import { hideLoading, showLoading } from 'ka-table/actionCreators';
 
 const CustomDateFilterEditor = ({
                                     column, dispatch,
@@ -32,7 +34,6 @@ const CustomDateFilterEditor = ({
 
 
 const TablePage: React.FC = () => {
-    const {jsonData} = useContext(AppContext)
     const [tableProps, changeTableProps] = useState( {
         columns: [
             { key: 'column1', title: 'First Name', dataType: DataType.String },
@@ -43,13 +44,53 @@ const TablePage: React.FC = () => {
             { key: 'column6', title: 'Wiki', dataType: DataType.String },
     
         ],
-        data: jsonData, //TODO przekazac dane
+        singleAction: loadData(),
         rowKeyField: 'id',
         sortingMode: SortingMode.Single,
         filteringMode: FilteringMode.FilterRow,
+        loading: {
+            enabled: true,
+            text: 'Loading data'
+          }
     });
-    const dispatch: DispatchFunc = (action) => {
+    const dispatch: DispatchFunc = async (action) => {
         changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+        
+    if (action.type === ActionType.LoadData) {
+        const url = "http://localhost:8000/api/laureates"
+        const token = localStorage.getItem("token");
+        const {data: res} = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+       
+        let json = res['laureates'];
+        const jsonArr = [];
+
+        for (let i = 0; i < json.length; i++) {
+            const person = json[i]
+            //TODO walidacja
+            if (person.hasOwnProperty('givenName') &&
+                person.hasOwnProperty('familyName') &&
+                person.hasOwnProperty('gender') &&
+                person.hasOwnProperty('birth')&&
+                'place' in person.birth)
+            {
+                jsonArr.push({
+                    column1: person.givenName.en,
+                    column2: person.familyName.en,
+                    column3: person.gender,
+                    column4:  person.birth.date,
+                    column5: person.birth.place.country.en,
+                    column6: person.wikipedia.english,
+                    id: person.id
+                })
+            }
+        }
+        dispatch(hideLoading());
+        dispatch(updateData(jsonArr));
+      }
     };
 
     return (

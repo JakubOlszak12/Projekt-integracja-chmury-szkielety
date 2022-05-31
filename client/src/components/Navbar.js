@@ -15,21 +15,31 @@ import {AppContext} from "../AppContext";
 
 const Navbar = () => {
     const [extendNavbar, setExtendNavbar] = useState(false);
-    const {dane, handleReadJson, handleReadPrizes, handleLogout,handleReadPrizesFromDatabase} = useContext(AppContext)
+    const {dane, handleReadJson, handleReadPrizes, handleLogout,handleReadPrizesFromDatabase,handleDownloadXml,handleDownloadJson} = useContext(AppContext)
 
     return (<NavbarContainer extendNavbar={extendNavbar}>
             <NavbarInnerContainer>
                 <LeftContainer>
                     <NavbarLinkContainer>
                         <NavbarLink to="/laureates">
-                            <button className='btn btn-container' onClick={handleReadJson}>
+                            <button className='btn btn-container'>
                                 ReadLaureates
                             </button>
                         </NavbarLink>
                         <NavbarLink to="/prizes">
-                            <button className='btn btn-container' onClick={handleReadPrizesFromDatabase}>
+                            <button className='btn btn-container'>
                                 ReadPrizes
                             </button>
+                        </NavbarLink>
+                        <NavbarLink to="/prizes">
+                        <button className='btn btn-container' onClick={handleDownloadXml}>
+                           prizes to XML
+                        </button>
+                        </NavbarLink>
+                        <NavbarLink to="/laureates">
+                        <button className='btn btn-container' onClick={handleDownloadJson}>
+                            laureates to JSON
+                        </button>
                         </NavbarLink>
                         
                         <NavbarLink to='/user'>
@@ -49,7 +59,7 @@ const Navbar = () => {
                 <RightContainer>
                     <NavbarLinkContainer>
                         
-                        <NavbarLink to='/'>
+                        <NavbarLink to='/login'>
                         <button className='btn btn-danger' onClick={handleLogout}>
                             Wyloguj się
                         </button>
@@ -60,12 +70,15 @@ const Navbar = () => {
             {
                 extendNavbar && (
                     <NavbarExtendedContainer>
-                        <button className='btn btn-container' onClick={handleReadJson}>
+                        <button className='btn btn-container'>
                             ReadLaureates
                         </button>
                  
-                        <button className='btn btn-container' onClick={handleReadPrizes}>
+                        <button className='btn btn-container'>
                             ReadPrizes
+                        </button>
+                        <button className='btn btn-container' onClick={handleDownloadXml}>
+                            Export to XML
                         </button>
                     
                         <button className='btn btn-info' onClick={handleLogout}>
