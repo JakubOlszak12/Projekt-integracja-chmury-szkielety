@@ -51,7 +51,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         //Liczba takich samych imion i nazwisk (limit 10)
         $laureatesMostLastNames = Laureate::all()->countBy('lastname')->sortDesc()->splice(0,10);
         $laureatesMostFirstNames = Laureate::all()->countBy('firstname')->sortDesc()->splice(0,10);
-
+      
         $chartsData[] = [
             'male_count' => $laureatesMaleCount, 'female_count' => $laureatesFemaleCount,
             'country_count' => $laureatesDistinctCountry,
@@ -60,6 +60,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
             ];
         return $chartsData;
     });
+
+ });
+Route::patch('/updateProfileData', function (Request $request){
+    return get_user();
+});
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/user-profile', [AuthController::class, 'userProfile']);
+Route::get('/PrizesFromDatabase', [NoblePrizeController::class, 'show']);
+Route::get('/prizesExportToXML', [NoblePrizeController::class, 'store']);
+Route::get('/laureatesToJSON', [LaureateController::class, 'store']);
+
 });
 
 

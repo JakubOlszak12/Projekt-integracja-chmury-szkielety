@@ -40,7 +40,9 @@ class LaureateController extends Controller
      */
     public function store(Request $request)
     {
-
+        $laureates = Laureate::all();
+        $laureates = json_encode($laureates,true);
+        return $laureates;
     }
     /**
      * Display the specified resource.
