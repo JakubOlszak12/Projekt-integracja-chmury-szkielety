@@ -5,13 +5,11 @@ import TablePage from "./TablePage";
 
 
 const Laureates = () => {
-    const {dane} = useContext(AppContext)
-    const [buttonState, setButton] = useState(true)
     return (
         <Wrapper>
             <div>
                 <nav>
-                    <h1>MySite</h1>
+                    <h1>Information on Nobel Prize Winners</h1>
                 </nav>
                 <div className='content'>
                     <TablePage />

@@ -15,7 +15,8 @@ import {AppContext} from "../AppContext";
 
 const Navbar = () => {
     const [extendNavbar, setExtendNavbar] = useState(false);
-    const {dane, handleReadJson, handleReadPrizes, handleLogout,handleReadPrizesFromDatabase,handleDownloadXml,handleDownloadJson} = useContext(AppContext)
+
+    const {dane, handleLogout,handleDownloadXml,handleDownloadJson} = useContext(AppContext)
 
     return (<NavbarContainer extendNavbar={extendNavbar}>
             <NavbarInnerContainer>
@@ -41,7 +42,6 @@ const Navbar = () => {
                             laureates to JSON
                         </button>
                         </NavbarLink>
-                        
                         <NavbarLink to='/user'>
                             <button className='btn btn-info'>
                                 Profile

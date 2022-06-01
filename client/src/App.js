@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Laureates from "./components/Laureates"
 import Prizes from "./components/Prizes"
 import {AppContextProvider} from "./AppContext";
+import Charts from "./components/Charts";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
             {user && <Route path="/prizes" exact element={<Prizes/>}/>}
             {user && <Route path="/storePrizes" exact element={<Laureates/>}/>}
             {user && <Route path="/storeLaureates" exact element={<Laureates/>}/>}
+            {user && <Route path="/charts" exact element={<Charts/>}/>}
             <Route path="/laureates" element={<Navigate replace to="/login" />} />
             <Route path="/storePrizes" element={<Navigate replace to="/login" />} />
             <Route path="/storeLaureates" element={<Navigate replace to="/login" />} />

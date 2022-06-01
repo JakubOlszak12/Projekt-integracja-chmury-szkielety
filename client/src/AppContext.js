@@ -9,10 +9,13 @@ export const AppContext = createContext();
 const AppContextProvider = (props) => {
   
 
+    useEffect(() =>{
+        handleReadChartDataFromDB();
+    },[])
         const [dane, ustawDane] = useState('')
-        const [jsonData, setJSON] = useState([]) 
-        const [jsonPrizeData, setJsonPrizeData] = useState([])   
-        const handleLogout = async () => {
+        const [jsonChartsData, setChartsData] = useState([])
+    const handleLogout = async () => {
+
         const url = "http://localhost:8000/api/logout"
         const json = JSON.stringify({token: `${localStorage.getItem("token")}`})
         localStorage.removeItem("token")
@@ -23,6 +26,21 @@ const AppContextProvider = (props) => {
                 'Content-Type': 'application/json'
             }
         })      
+    }
+
+    const handleReadChartDataFromDB = async () => {
+        const url = "http://localhost:8000/api/charts"
+        const token = localStorage.getItem("token");
+        await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((response) =>{
+            setChartsData(response.data)
+        }).catch(err =>{
+            console.log('handleReadChartDataFromDB ERROR')
+            console.log(err)
+        })
     }
 
     const handleDownloadXml = async () => {
@@ -44,9 +62,9 @@ const AppContextProvider = (props) => {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        })
-  
+        )
         fileDownload(JSON.stringify(result), `laureates.json`);
+
     }
 
 
@@ -54,6 +72,10 @@ const AppContextProvider = (props) => {
         <AppContext.Provider value={{
             dane,
             handleLogout,
+
+            handleReadChartDataFromDB,
+            jsonPrizeData,
+            jsonChartsData
             handleDownloadXml,
             handleDownloadJson
         }}>

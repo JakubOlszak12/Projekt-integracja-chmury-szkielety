@@ -1,21 +1,25 @@
 import React, {useContext,useState} from 'react';
 import Wrapper from "../wrapper/MainPageContainer";
-import TablePage from "./TablePagePrizes";
+import {useAppContext} from "../AppContext";
 
+const Charts = () => {
 
-const Prizes = () => {
-  
+    const {jsonChartsData} = useAppContext()
+
     return (
         <Wrapper>
             <div>
                 <nav>
-                    <h1>Information about Nobel Prizes</h1>
+                    <h1>MySite</h1>
                 </nav>
                 <div className='content'>
-                    <TablePage/>
+                    Male {console.log(jsonChartsData)}
+
                 </div>
             </div>
         </Wrapper>
     )
 }
-export default Prizes
+
+
+export default Charts
