@@ -20,7 +20,7 @@ const Navbar = () => {
 
     return (<NavbarContainer extendNavbar={extendNavbar}>
             <NavbarInnerContainer>
-                <LeftContainer>
+
                     <NavbarLinkContainer>
                         <NavbarLink to="/laureates">
                             <button className='btn btn-container'>
@@ -39,12 +39,12 @@ const Navbar = () => {
                         </NavbarLink>
                         <NavbarLink to="/prizes">
                         <button className='btn btn-container' onClick={handleDownloadXml}>
-                           prizes to XML
+                           Download prizes.xml
                         </button>
                         </NavbarLink>
                         <NavbarLink to="/laureates">
                         <button className='btn btn-container' onClick={handleDownloadJson}>
-                            laureates to JSON
+                            Download laureates.json
                         </button>
                         </NavbarLink>
                         <NavbarLink to='/user'>
@@ -60,7 +60,7 @@ const Navbar = () => {
                             {extendNavbar ? <>&#10005;</> : <> &#8801;</>}
                         </OpenLinksButton>
                     </NavbarLinkContainer>
-                </LeftContainer>
+
                 <RightContainer>
                     <NavbarLinkContainer>
                         

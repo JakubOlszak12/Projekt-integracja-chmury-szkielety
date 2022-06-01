@@ -5,9 +5,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Symfony\Component\HttpFoundation\Response;
 use Validator;
 use JWTAuth;
-use Response;
+
 class AuthController extends Controller
 {
     /**

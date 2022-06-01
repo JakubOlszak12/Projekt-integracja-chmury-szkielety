@@ -1,4 +1,4 @@
-import React, {useContext,useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Wrapper from "../wrapper/MainPageContainer";
 import {useAppContext} from "../AppContext";
 
