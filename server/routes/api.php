@@ -29,6 +29,7 @@ Route::group([
 });
 
 Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::delete('/delete', [AuthController::class, 'delete']);
     Route::get('/laureates', function (Request $request) {
         $laureates = file_get_contents(storage_path() . "/laureates.json");
         return $laureates;
