@@ -178,7 +178,7 @@ const Charts = () => {
                         title: "Nobel prizes awarded in a given year",
                         hAxis: { title: "Year", titleTextStyle: { color: "#333" } },
                         vAxis: { minValue: 0 },
-                        chartArea: { width: "50%", height: "70%" },
+                        chartArea: { width: "80%", height: "70%" },
                     }}
                 />
 
@@ -190,9 +190,9 @@ const Charts = () => {
                     options={{
                         title: "Nobel prizes awarded in a given year based of Category",
                         isStacked: true,
-                        height: 300,
-                        legend: { position: "top", maxLines: 3 },
+                        hAxis: { title: "Year", titleTextStyle: { color: "#333" } },
                         vAxis: { minValue: 0 },
+                        chartArea: { width: "80%", height: "70%" },
                     }}
                 />
             </div>
