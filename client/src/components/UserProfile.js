@@ -12,7 +12,7 @@ const UserProfile = () => {
     const [name, setName] = useState(user.name || '')
     const [email, setEmail] = useState(user.email || '')
 
-    const handleDelete = (id,e) =>{
+    const handleDelete = (id, e) => {
         e.preventDefault()
         const url = `http://localhost:8000/api/delete`
         const token = localStorage.getItem("token");
@@ -20,9 +20,9 @@ const UserProfile = () => {
         axios.delete(url, {
             headers: {
                 'Authorization': `Bearer ${token}`,
-                'email':email
+                'email': email
             },
-        }).then(()=>{
+        }).then(() => {
             localStorage.removeItem("token");
             localStorage.removeItem("user")
             window.location.reload()
@@ -40,20 +40,32 @@ const UserProfile = () => {
             <form className='form'>
                 <h3>profile</h3>
                 <div className='form-center'>
-                    <FormRow
-                        type='text'
-                        name='name'
-                        value={name}
-                        handleChange={(e) => setName(e.target.value)}
-                    />
-                    <FormRow
-                        type='email'
-                        name='email'
-                        value={email}
-                        handleChange={(e) => setEmail(e.target.value)}
-                    />
+                    <div className='form-row'>
+                        <label className='form-label'>
+                            name
+                        </label>
+                        <input
+                            type='text'
+                            value={name}
+                            name={name}
+                            disabled={true}
+                            className='form-input'
+                        />
+                    </div>
+                    <div className='form-row'>
+                        <label className='form-label'>
+                            email
+                        </label>
+                        <input
+                            type='email'
+                            value={email}
+                            name={email}
+                            disabled={true}
+                            className='form-input'
+                        />
+                    </div>
                     {console.log(user)}
-                    <button className='btn btn-danger' onClick={(e) => handleDelete(user.id,e)}>
+                    <button className='btn btn-danger' onClick={(e) => handleDelete(user.id, e)}>
                         Delete Account <BsFillTrashFill/>
                     </button>
                 </div>

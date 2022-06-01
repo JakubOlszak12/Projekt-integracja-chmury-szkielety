@@ -171,20 +171,7 @@ class AuthController extends Controller
     public function delete(Request $request)
     {
 
-
-        //valid credential
-        $validator = Validator::make($request->only('token'), [
-            'token' => 'required'
-        ]);
-
-        //Send failed response if request is not valid
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
-        }
-
-
-        //Request is validated, do logout
-        try {
+            //TODO
             $email = $request->header('email');
             $user = JWTAuth::authenticate($request->token);
 
@@ -197,12 +184,7 @@ class AuthController extends Controller
                 'success' => true,
                 'message' => 'User has been logged out'
             ]);
-        } catch (JWTException $exception) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, user cannot be logged out'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+
     }
 
 
