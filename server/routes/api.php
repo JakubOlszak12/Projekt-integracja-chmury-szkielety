@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Laureate;
+use App\Models\NobelPrize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -47,17 +48,32 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         //Liczba laureatow z danego kraju
         $laureatesDistinctCountry = Laureate::all()->countBy('country');
 
+        $prizesAwardedYearCount = NobelPrize::all()->countBy('award_year');
+
+        $prizesDistinctCategoryCount = NobelPrize::all()->countBy('category');
+
         //Liczba takich samych imion i nazwisk (limit 10)
-        $laureatesMostLastNames = Laureate::all()->countBy('lastname')->sortDesc()->splice(0, 10);
-        $laureatesMostFirstNames = Laureate::all()->countBy('firstname')->sortDesc()->splice(0, 10);
+        $laureatesMostLastNames = Laureate::all()->countBy('lastname')->sortDesc()->splice(0, 8);
+        $laureatesMostFirstNames = Laureate::all()->countBy('firstname')->sortDesc()->splice(0, 8);
 
-
+        //$prizesDistinctCategory = NobelPrize::orderBy('category','asc')->distinct('category')->get(['category']);
+        $prizesDistinctCategory = NobelPrize::orderBy('category','asc')->distinct('category')->get(['category'])->pluck('category');
+        $category_prizeAmount = [];
+        $category_prizeAmountAdjusted = [];
+        foreach ($prizesDistinctCategory as $category){
+                $category_prizeAmount[$category] = NobelPrize::where('category', '=', $category)->sum('prize');
+                $category_prizeAmountAdjusted[$category] = NobelPrize::where('category', '=', $category)->sum('prize_adjusted');
+        }
 
         $chartsData[] = [
             'male_count' => $laureatesMaleCount, 'female_count' => $laureatesFemaleCount,
             'country_count' => $laureatesDistinctCountry,
             'most_last_names' => $laureatesMostLastNames,
-            'most_first_names' => $laureatesMostFirstNames
+            'most_first_names' => $laureatesMostFirstNames,
+            'awarded_year' => $prizesAwardedYearCount,
+            'prize_category_count' => $prizesDistinctCategoryCount,
+            'prize_amount_by_category' => $category_prizeAmount,
+            'prize_amount_adjusted_by_category' => $category_prizeAmountAdjusted,
         ];
         return $chartsData;
     });
