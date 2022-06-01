@@ -24,7 +24,7 @@ class AuthController extends Controller
      * @return JsonResponse
      */
     public function login(Request $request){
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('id','email', 'password');
 
         //valid credential
         try{
@@ -57,7 +57,7 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'token' => $token,
-            'user' => $request->only('email','name')
+            'user' => $request->only('id','email','name')
         ]);
     }
     /**
@@ -168,5 +168,24 @@ class AuthController extends Controller
 
         return response()->json(['user' => $user]);
     }
+    public function delete(Request $request)
+    {
+
+            //TODO
+            $email = $request->header('email');
+            $user = JWTAuth::authenticate($request->token);
+
+            $user = User::where('email','=',$email);
+            $user->delete();
+
+            JWTAuth::invalidate($request->token);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User has been logged out'
+            ]);
+
+    }
+
 
 }

@@ -11,27 +11,22 @@ const UserProfile = () => {
 
     const [name, setName] = useState(user.name || '')
     const [email, setEmail] = useState(user.email || '')
-    const handleSubmit = (e) => {
+
+    const handleDelete = (id, e) => {
         e.preventDefault()
-        if (!name || !email) {
-            //show blad
-            return
-        }
-        updateUser({name, email})
-    }
+        const url = `http://localhost:8000/api/delete`
+        const token = localStorage.getItem("token");
 
-    const updateUser = async (currentUser) => {
-        try {
-            const {data} = await axios.patch('/api/updateUser', currentUser)
-
-
-            const {user, token} = data
-            addUserToLocalStorage({user, token})
-        } catch (error) {
-            if (error.response.status !== 401) {
-                //xd
-            }
-        }
+        axios.delete(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'email': email
+            },
+        }).then(() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user")
+            window.location.reload()
+        })
     }
 
     const addUserToLocalStorage = ({user, token}) => {
@@ -39,28 +34,38 @@ const UserProfile = () => {
         localStorage.setItem('token', token)
     }
 
+
     return (
         <Wrapper>
-            <form className='form' onSubmit={handleSubmit}>
+            <form className='form'>
                 <h3>profile</h3>
                 <div className='form-center'>
-                    <FormRow
-                        type='text'
-                        name='name'
-                        value={name}
-                        handleChange={(e) => setName(e.target.value)}
-                    />
-                    <FormRow
-                        type='email'
-                        name='email'
-                        value={email}
-                        handleChange={(e) => setEmail(e.target.value)}
-                    />
-
-                    <button className='btn btn-block' type='submit'>
-                        save changes
-                    </button>
-                    <button className='btn btn-danger'>
+                    <div className='form-row'>
+                        <label className='form-label'>
+                            name
+                        </label>
+                        <input
+                            type='text'
+                            value={name}
+                            name={name}
+                            disabled={true}
+                            className='form-input'
+                        />
+                    </div>
+                    <div className='form-row'>
+                        <label className='form-label'>
+                            email
+                        </label>
+                        <input
+                            type='email'
+                            value={email}
+                            name={email}
+                            disabled={true}
+                            className='form-input'
+                        />
+                    </div>
+                    {console.log(user)}
+                    <button className='btn btn-danger' onClick={(e) => handleDelete(user.id, e)}>
                         Delete Account <BsFillTrashFill/>
                     </button>
                 </div>
