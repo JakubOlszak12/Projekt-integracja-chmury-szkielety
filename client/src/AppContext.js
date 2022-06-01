@@ -7,12 +7,15 @@ export const AppContext = createContext();
 
 
 const AppContextProvider = (props) => {
-  
 
-        const [dane, ustawDane] = useState('')
-        const [jsonData, setJSON] = useState([]) 
-        const [jsonPrizeData, setJsonPrizeData] = useState([])   
-        const handleLogout = async () => {
+
+    useEffect(() =>{
+        handleReadChartDataFromDB();
+    },[])
+    const [dane, ustawDane] = useState('')
+    const [jsonChartsData, setChartsData] = useState([])
+    const handleLogout = async () => {
+
         const url = "http://localhost:8000/api/logout"
         const json = JSON.stringify({token: `${localStorage.getItem("token")}`})
         localStorage.removeItem("token")
@@ -22,20 +25,26 @@ const AppContextProvider = (props) => {
             headers: {
                 'Content-Type': 'application/json'
             }
-        })      
+        })
     }
 
-<<<<<<< HEAD
     const handleReadChartDataFromDB = async () => {
-
+        const url = "http://localhost:8000/api/charts"
+        const token = localStorage.getItem("token");
+        await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((response) =>{
+            setChartsData(response.data)
+        }).catch(err =>{
+            console.log('handleReadChartDataFromDB ERROR')
+            console.log(err)
+        })
     }
 
-    const handleReadJson = async () => {
-        const url = "http://localhost:8000/api/laureates"
-=======
     const handleDownloadXml = async () => {
         const url = "http://localhost:8000/api/prizesExportToXML"
->>>>>>> f85d4e49ed2b3de6ab673cedda639c6343a5a3ad
         const token = localStorage.getItem("token");
         const {data: res} = await axios.get(url, {
             headers: {
@@ -54,36 +63,30 @@ const AppContextProvider = (props) => {
                 'Authorization': `Bearer ${token}`
             }
         })
-  
         fileDownload(JSON.stringify(result), `laureates.json`);
+
     }
 
 
-    return (
-        <AppContext.Provider value={{
-            dane,
-            handleLogout,
-<<<<<<< HEAD
-            handleReadJson,
-            jsonData,
-            handleReadPrizesFromDatabase,
-            handleReadChartDataFromDB,
-            jsonPrizeData
-=======
-            handleDownloadXml,
-            handleDownloadJson
->>>>>>> f85d4e49ed2b3de6ab673cedda639c6343a5a3ad
-        }}>
-            {props.children}
-        </AppContext.Provider>
-    );
+        return (
+            <AppContext.Provider value={{
+                dane,
+                handleLogout,
+                handleReadChartDataFromDB,
+                jsonChartsData,
+                handleDownloadXml,
+                handleDownloadJson
+            }}>
+                {props.children}
+            </AppContext.Provider>
+        );
 
 
-}
+    }
 
-const useAppContext = () => {
-    return useContext(AppContext)
-}
+    const useAppContext = () => {
+        return useContext(AppContext)
+    }
 
 
-export {AppContextProvider,useAppContext}
+    export {AppContextProvider,useAppContext}

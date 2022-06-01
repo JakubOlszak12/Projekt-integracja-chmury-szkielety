@@ -15,33 +15,14 @@ import {AppContext} from "../AppContext";
 
 const Navbar = () => {
     const [extendNavbar, setExtendNavbar] = useState(false);
-<<<<<<< HEAD
-    const {dane, handleReadJson, handleReadPrizes, handleLogout,handleReadPrizesFromDatabase,handleReadChartDataFromDB} = useContext(AppContext)
-=======
-    const {dane, handleReadJson, handleReadPrizes, handleLogout,handleReadPrizesFromDatabase,handleDownloadXml,handleDownloadJson} = useContext(AppContext)
->>>>>>> f85d4e49ed2b3de6ab673cedda639c6343a5a3ad
+    const {dane, handleLogout,handleDownloadXml,handleDownloadJson,handleReadChartDataFromDB} = useContext(AppContext)
+
 
     return (<NavbarContainer extendNavbar={extendNavbar}>
             <NavbarInnerContainer>
                 <LeftContainer>
                     <NavbarLinkContainer>
                         <NavbarLink to="/laureates">
-<<<<<<< HEAD
-                            <button className='btn btn-container' onClick={handleReadJson}>
-                                Nobel Laureates
-                            </button>
-                        </NavbarLink>
-                        <NavbarLink to="/prizes">
-                            <button className='btn btn-container' onClick={handleReadPrizesFromDatabase}>
-                                Nobel Prizes
-                            </button>
-                        </NavbarLink>
-                        <NavbarLink to="/charts">
-                            <button className='btn btn-container' onClick={handleReadChartDataFromDB}>
-                                Charts
-                            </button>
-                        </NavbarLink>
-=======
                             <button className='btn btn-container'>
                                 ReadLaureates
                             </button>
@@ -49,6 +30,11 @@ const Navbar = () => {
                         <NavbarLink to="/prizes">
                             <button className='btn btn-container'>
                                 ReadPrizes
+                            </button>
+                        </NavbarLink>
+                        <NavbarLink to="/charts">
+                            <button className='btn btn-container' onClick={handleReadChartDataFromDB}>
+                                Charts
                             </button>
                         </NavbarLink>
                         <NavbarLink to="/prizes">
@@ -61,8 +47,6 @@ const Navbar = () => {
                             laureates to JSON
                         </button>
                         </NavbarLink>
-                        
->>>>>>> f85d4e49ed2b3de6ab673cedda639c6343a5a3ad
                         <NavbarLink to='/user'>
                             <button className='btn btn-info'>
                                 Profile
