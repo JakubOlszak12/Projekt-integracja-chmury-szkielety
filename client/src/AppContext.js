@@ -1,5 +1,6 @@
 import React, {useContext,createContext, useState, useEffect} from 'react';
 import axios from "axios";
+import fileDownload from 'js-file-download'
 
 export const AppContext = createContext();
 
@@ -8,112 +9,70 @@ export const AppContext = createContext();
 const AppContextProvider = (props) => {
   
 
-    useEffect(() =>{
-        handleReadJson();
-        handleReadPrizesFromDatabase();
-    },[])
-
         const [dane, ustawDane] = useState('')
         const [jsonData, setJSON] = useState([]) 
         const [jsonPrizeData, setJsonPrizeData] = useState([])   
-    const handleLogout = async () => {
+        const handleLogout = async () => {
         const url = "http://localhost:8000/api/logout"
         const json = JSON.stringify({token: `${localStorage.getItem("token")}`})
-        console.log(json)
+        localStorage.removeItem("token")
+        localStorage.removeItem("user")
+        window.location.reload()
         const {data: res} = await axios.post(url, json, {
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-        console.log(res)
-        localStorage.removeItem("token")
-        localStorage.removeItem("user")
-        window.location.reload()
-        
+        })      
     }
 
+<<<<<<< HEAD
     const handleReadChartDataFromDB = async () => {
 
     }
 
     const handleReadJson = async () => {
         const url = "http://localhost:8000/api/laureates"
+=======
+    const handleDownloadXml = async () => {
+        const url = "http://localhost:8000/api/prizesExportToXML"
+>>>>>>> f85d4e49ed2b3de6ab673cedda639c6343a5a3ad
         const token = localStorage.getItem("token");
-        console.log(token)
         const {data: res} = await axios.get(url, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
+        }).then((res) =>{
+            fileDownload(res.data, `prizes.xml`);
         })
-       
-        let json = res['laureates'];
-    
-        console.log(json[0])
-        const jsonArr = [];
-
-        for (let i = 0; i < json.length; i++) {
-            const person = json[i]
-            //TODO walidacja
-            if (person.hasOwnProperty('givenName') &&
-                person.hasOwnProperty('familyName') &&
-                person.hasOwnProperty('gender') &&
-                person.hasOwnProperty('birth')&&
-                'place' in person.birth)
-            {
-                jsonArr.push({
-                    column1: person.givenName.en,
-                    column2: person.familyName.en,
-                    column3: person.gender,
-                    column4:  person.birth.date,
-                    column5: person.birth.place.country.en,
-                    column6: person.wikipedia.english,
-                    id: person.id
-                })
-            }
-        }
-        setJSON(jsonArr)
     }
 
-    const handleReadPrizesFromDatabase = async () => {
-        const url = "http://localhost:8000/api/PrizesFromDatabase"
+    const handleDownloadJson= async () => {
+        const url = "http://localhost:8000/api/laureatesToJSON"
         const token = localStorage.getItem("token");
-        console.log(token);
-        const {data: res} = await axios.get(url, {
+        const {data:result} = await axios.get(url, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
-        let json = res;
-    
-        console.log(json[0])
-        const jsonArr = [];
-
-        for (let i = 0; i < json.length; i++) {
-            const prize = json[i]
-            {
-                jsonArr.push({
-                    column1: prize.laureate_name,
-                    column2: prize.award_year,
-                    column3: prize.category,
-                    column4: prize.prize,
-                    column5: prize.prize_adjusted,
-                    column6: prize.motivation,
-                    column7: prize.wikipedia,
-                })
-            }
-        }
-        setJsonPrizeData(jsonArr)
+  
+        fileDownload(JSON.stringify(result), `laureates.json`);
     }
+
 
     return (
         <AppContext.Provider value={{
             dane,
             handleLogout,
+<<<<<<< HEAD
             handleReadJson,
             jsonData,
             handleReadPrizesFromDatabase,
             handleReadChartDataFromDB,
             jsonPrizeData
+=======
+            handleDownloadXml,
+            handleDownloadJson
+>>>>>>> f85d4e49ed2b3de6ab673cedda639c6343a5a3ad
         }}>
             {props.children}
         </AppContext.Provider>
