@@ -75,6 +75,19 @@ const Charts = () => {
         });
         return arr;
     }
+    const parseToAreaChart1 = (json,array) => {
+        let arr = [];
+        arr.push(array)
+        Object.entries(json).forEach(entry => {
+            let key = entry[0];
+            let value = entry[1];
+            var arrayOfNumbers = value.map(Number);
+            arr.push([key].concat(arrayOfNumbers))
+        });
+        console.log(arr);
+        return arr;
+
+    }
 
     return (
         <Wrapper>
@@ -140,18 +153,18 @@ const Charts = () => {
                         chartType="PieChart"
                         width="100%"
                         height="400px"
-                        data={parseJson(jsonChartsData[0].prize_amount_by_category,["Total amount awarded in a given category","Prize"])}
+                        data={parseJson(jsonChartsData[0].prize_amount_by_category,["Total amount awarded in a given category at the year of the award","Prize"])}
                         options={{
-                            title: "Total amount awarded in a given category",
+                            title: "Total amount awarded in a given category at the year of the award",
                         }}
                     />
                     <Chart
                         chartType="PieChart"
                         width="100%"
                         height="400px"
-                        data={parseJson(jsonChartsData[0].prize_amount_adjusted_by_category,["Total amount awarded in a given category","Prize"])}
+                        data={parseJson(jsonChartsData[0].prize_amount_adjusted_by_category,["Total amount awarded in a given category according to Index number yearly average","Prize"])}
                         options={{
-                            title: "Total amount  awarded in a given category",
+                            title: "Total amount  awarded in a given category according to Index number yearly average",
                         }}
                     />
                 </div>
@@ -166,6 +179,20 @@ const Charts = () => {
                         hAxis: { title: "Year", titleTextStyle: { color: "#333" } },
                         vAxis: { minValue: 0 },
                         chartArea: { width: "50%", height: "70%" },
+                    }}
+                />
+
+                <Chart
+                    chartType="AreaChart"
+                    width="100%"
+                    height="400px"
+                    data={parseToAreaChart1(jsonChartsData[0].awarded_year_by_category,["Year","Chemistry",'Economic Sciences','Literature','Peace','Physics','Physiology or Medicine'])}
+                    options={{
+                        title: "Nobel prizes awarded in a given year based of Category",
+                        isStacked: true,
+                        height: 300,
+                        legend: { position: "top", maxLines: 3 },
+                        vAxis: { minValue: 0 },
                     }}
                 />
             </div>

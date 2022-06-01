@@ -58,6 +58,17 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
         //$prizesDistinctCategory = NobelPrize::orderBy('category','asc')->distinct('category')->get(['category']);
         $prizesDistinctCategory = NobelPrize::orderBy('category','asc')->distinct('category')->get(['category'])->pluck('category');
+        $prizesDistinctYear = NobelPrize::orderBy('award_year','asc')->distinct('award_year')->get(['award_year'])->pluck('award_year');
+
+        $prizesAwardedYearCountbyCategory = [];
+        foreach ($prizesDistinctYear as $currentYear){
+            $category_AmountInCurrentYear = [];
+            foreach ($prizesDistinctCategory as $category){
+                $category_AmountInCurrentYear[] = NobelPrize::where('award_year', '=', $currentYear)->where('category', '=', $category)->count();
+            }
+            $prizesAwardedYearCountbyCategory[$currentYear] = $category_AmountInCurrentYear;
+        }
+
         $category_prizeAmount = [];
         $category_prizeAmountAdjusted = [];
         foreach ($prizesDistinctCategory as $category){
@@ -71,6 +82,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
             'most_last_names' => $laureatesMostLastNames,
             'most_first_names' => $laureatesMostFirstNames,
             'awarded_year' => $prizesAwardedYearCount,
+            'awarded_year_by_category' => $prizesAwardedYearCountbyCategory,
             'prize_category_count' => $prizesDistinctCategoryCount,
             'prize_amount_by_category' => $category_prizeAmount,
             'prize_amount_adjusted_by_category' => $category_prizeAmountAdjusted,
