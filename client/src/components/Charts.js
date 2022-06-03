@@ -188,7 +188,7 @@ const Charts = () => {
                     height="400px"
                     data={parseToAreaChart1(jsonChartsData[0].awarded_year_by_category,["Year","Chemistry",'Economic Sciences','Literature','Peace','Physics','Physiology or Medicine'])}
                     options={{
-                        title: "Nobel prizes awarded in a given year based of Category",
+                        title: "Nobel prizes awarded in a given year based on Category",
                         isStacked: true,
                         hAxis: { title: "Year", titleTextStyle: { color: "#333" } },
                         vAxis: { minValue: 0 },

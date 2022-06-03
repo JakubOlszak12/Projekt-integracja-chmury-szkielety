@@ -38,6 +38,15 @@ function App() {
             {user && <Route path="/deletePrizes" exact element={<Laureates/>}/>}
             <Route path="/deleteLaureates" element={<Navigate replace to="/login" />} />
             <Route path="/deletePrizes" element={<Navigate replace to="/login" />} />
+            {user && <Route path="/addLaureate" exact element={<AddLaureate/>}/>}
+            <Route path="/addLaureate" element={<Navigate replace to="/login" />} />
+            <Route path="/charts" element={<Navigate replace to="/login" />} />
+            {user && <Route path="/addNobelPrize" exact element={<AddNobelPrize/>}/>}
+            <Route path="/addNobelPrize" element={<Navigate replace to="/login" />} />
+            {user && <Route path="/editNobelPrize/:id" exact element={<EditNobelPrize/>}/>}
+            <Route path="/editNobelPrize/:id" element={<Navigate replace to="/login" />} />
+            {user && <Route path="/editLaureate/:id" exact element={<EditLaureate/>}/>}
+            <Route path="/editLaureate/:id" element={<Navigate replace to="/login" />} />
         </Routes>
         </AppContextProvider>
     </BrowserRouter>

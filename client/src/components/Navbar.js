@@ -47,10 +47,15 @@ const Navbar = () => {
                             Download laureates.json
                         </button>
                         </NavbarLink>
-                        <NavbarLink to='/user'>
-                            <button className='btn btn-info'>
-                                Profile
-                            </button>
+                        <NavbarLink to="/addLaureate">
+                        <button className='btn btn-container'>
+                            Add laureate
+                        </button>
+                        </NavbarLink>
+                        <NavbarLink to="/addNobelPrize">
+                        <button className='btn btn-container'>
+                            Add NobelPrize
+                        </button>
                         </NavbarLink>
                         <OpenLinksButton
                             onClick={() => {
@@ -65,7 +70,7 @@ const Navbar = () => {
                     <NavbarLinkContainer>
                         <NavbarLink to='/login'>
                         <button className='btn btn-danger' onClick={handleLogout}>
-                            Wyloguj się
+                            Logout
                         </button>
                         </NavbarLink>
                     </NavbarLinkContainer>
@@ -77,16 +82,20 @@ const Navbar = () => {
                         <button className='btn btn-container'>
                             ReadLaureates
                         </button>
-                 
                         <button className='btn btn-container'>
-                            ReadPrizes
-                        </button>
+                                ReadPrizes
+                            </button>
                         <button className='btn btn-container' onClick={handleDownloadXml}>
                             Export to XML
                         </button>
-                    
-                        <button className='btn btn-info' onClick={handleLogout}>
-                            Profile
+                        <button className='btn btn-container' onClick={handleDownloadJson}>
+                            Export to JSON
+                        </button>
+                        <button className='btn btn-container'>
+                            Add NobelPrize
+                        </button>
+                        <button className='btn btn-danger' onClick={handleLogout}>
+                            Logout
                         </button>
                     </NavbarExtendedContainer>
                 )

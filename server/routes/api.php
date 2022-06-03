@@ -34,7 +34,15 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         $laureates = file_get_contents(storage_path() . "/laureates.json");
         return $laureates;
     });
-
+    Route::patch('/updateLaureate/{id}',[LaureateController::class,'edit']);
+    Route::patch('/updatePrize/{id}',[NoblePrizeController::class,'edit']);
+    Route::delete('/deleteLaureate/{id}',[LaureateController::class, 'destroy']);
+    Route::delete('/deleteNobelPrize/{id}',[NoblePrizeController::class, 'destroy']);
+    Route::get('/getPrizeInfo/{id}', [NoblePrizeController::class, 'index']);
+    Route::get('/getLaureateInfo/{id}', [LaureateController::class, 'index']);
+    Route::get('/laureatesFromDatabase', [LaureateController::class, 'show']);
+    Route::post('/addNobelPrize',[NoblePrizeController::class, 'create']);
+    Route::post('/addLaureate', [LaureateController::class, 'create']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::get('/PrizesFromDatabase', [NoblePrizeController::class, 'show']);
@@ -90,11 +98,44 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         ];
         return $chartsData;
     });
+    Route::get('/getCountries', function (Request $request) {
+     $countries = Laureate::select('country')->distinct()->get();
+     $array = [];
 
-    #TODO
-    Route::patch('/updateProfileData', function (Request $request) {
-        return get_user();
+     foreach($countries as $country){
+        $row = [];
+        $row['label'] = $country['country'];
+        $row['value'] = $country['country'];
+        array_push($array,$row);
+     }
+     return $array;
     });
+
+    Route::get('/getLaureateName', function (Request $request) {
+        $laureates = Laureate::select('firstname', 'lastname', 'id')->get();
+        $array = [];
+
+        foreach($laureates as $laureate){
+           $row = [];
+           $row['label'] = $laureate['firstname']." ".$laureate['lastname'];
+           $row['value'] = $laureate['id'];
+           array_push($array,$row);
+        }
+        return $array;
+       });
+
+       Route::get('/getCategories', function (Request $request) {
+        $categories = NobelPrize::select('category')->distinct()->get();
+        $array = [];
+
+        foreach($categories as $category){
+           $row = [];
+           $row['label'] = $category['category'];
+           $row['value'] =  $category['category'];
+           array_push($array,$row);
+        }
+        return $array;
+       });
 });
 
 

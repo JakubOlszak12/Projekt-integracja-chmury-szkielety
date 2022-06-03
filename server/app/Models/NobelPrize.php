@@ -12,6 +12,7 @@ class NobelPrize extends Model
      *
      * @var array<int, string>
      */
+    public $timestamps = false;
     protected $fillable = [
         'award_year',
         'category',

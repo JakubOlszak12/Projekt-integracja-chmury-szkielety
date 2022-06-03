@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\NobelPrize;
 use App\Models\Laureate;
 use DB;
+use Validator;
 use Illuminate\Support\Facades\Storage;
 use SoapBox\Formatter\Formatter;
 use Spatie\ArrayToXml\ArrayToXml;
+use Symfony\Component\HttpFoundation\Response;
 class NoblePrizeController extends Controller
 {
     /**
@@ -16,8 +18,16 @@ class NoblePrizeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $prizeinfo =  NobelPrize::select('id','award_year','category','prize','prize_adjusted','motivation','laureate_id')->where('id',$id)->get();
+        $prize = json_encode($prizeinfo);
+        $prize = json_decode($prize);
+        if(empty($prize)){
+            return "error";
+        }else{
+            return $prizeinfo;
+        }
 
     }
 
@@ -26,9 +36,38 @@ class NoblePrizeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $credentials = $request->only('award_year','category', 'prize', 'prize_adjusted', 'motivation','laureate_id');
+
+            $validator = Validator::make($credentials, [
+                'award_year' => 'required|integer|min:1900|max:2099',
+                'category' => 'required|string|min:3',
+                'prize' => 'required|integer|min:1',
+                'prize_adjusted' => 'required|integer|min:1',
+                'motivation' => 'required|string|min:3|max:500',
+                'laureate_id' => 'required|integer|min:1'
+            ]);
+            if($validator->fails()){
+                return response()->json([
+                	'success' => false,
+                	'message' => 'Wrong data passed while trying to add Nobel Prize',
+                ], 400);
+            }
+        NobelPrize::create([
+            'award_year' => $request->award_year,
+            'category' => $request->category,
+            'prize' => $request->prize,
+            'prize_adjusted' => $request->prize_adjusted,
+            'motivation' => $request->motivation,
+            'laureate_id' => $request->laureate_id
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Laureate added successfully',
+            'data' => $credentials
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -40,10 +79,7 @@ class NoblePrizeController extends Controller
     public function store(Request $request)
     {
         $array = [];
-
-
         $prizes = NobelPrize::all();
-
         foreach($prizes as $prize){
             $laureate = Laureate::where('id', $prize['laureate_id'])->first();
             $record['id'] = strval($prize['id']);
@@ -92,9 +128,48 @@ class NoblePrizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $credentials = $request->only('award_year','category', 'prize', 'prize_adjusted', 'motivation','laureate_id');
+
+            $validator = Validator::make($credentials, [
+                'award_year' => 'required|integer|min:1900|max:2099',
+                'category' => 'required|string|min:3',
+                'prize' => 'required|integer|min:1',
+                'prize_adjusted' => 'required|integer|min:1',
+                'motivation' => 'required|string|min:3|max:500',
+                'laureate_id' => 'required|integer|min:1'
+            ]);
+            if($validator->fails()){
+                return response()->json([
+                	'success' => false,
+                	'message' => 'Wrong data passed while updating Nobel Prize',
+                ], 400);
+            }
+
+        $prize = NobelPrize::find($id);
+        try{
+            $prize->award_year = $request->award_year;
+            $prize->category = $request->category;
+            $prize->prize = $request->prize;
+            $prize->prize_adjusted = $request->prize_adjusted;
+            $prize->motivation = $request->motivation;
+            $prize->laureate_id = $request->laureate_id;
+            $prize->save();
+        } catch (error $e){
+            return response()->json([
+                'error' => $e,
+                'success' => false,
+                'message' => 'Something went wrong while updating',
+            ], 200);
+        }
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Laureate updated successfully',
+            'data' => $credentials
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -115,10 +190,18 @@ class NoblePrizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
-        DB::statement("SET foreign_key_checks=0");
-        NobelPrize::truncate();
-        DB::statement("SET foreign_key_checks=1");
+        try{
+            DB::table('nobel_prizes')->where('id',$id)->delete();
+          }  catch (error $e){
+              return response()->json([
+                  'error' => $e,
+                  'message' => "someting went wrong"
+              ], 300);
+          }
+          return response()->json([
+            'message' => "successfully deleted record!"
+          ]);
     }
 }

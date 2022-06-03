@@ -37,7 +37,7 @@ const Signup = () => {
         <Wrapper className='full-page'>
                     <form className='form'
                           onSubmit={handleSubmit}>
-                        <h1>Zakładanie konta</h1>
+                        <h1>Registration</h1>
                         <FormRow
                             type='text'
                             name='name'
@@ -64,13 +64,13 @@ const Signup = () => {
                         />
                         {error && <div>{error}</div>}
                         <button type="submit" className='btn btn-block'>
-                            Zaloguj się
+                            Sign in!
                         </button>
                         <p>
-                            Witaj z powrotem
+                            Welcome back
                             <Link to="/login">
                                 <button type="button" className='member-btn'>
-                                    Sing in
+                                    Log in!
                                 </button>
                             </Link>
                         </p>

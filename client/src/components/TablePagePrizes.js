@@ -3,7 +3,7 @@ import {AppContext, useAppContext} from "../AppContext";
 import { ITableProps, kaReducer, Table } from 'ka-table';
 import { DataType, EditingMode, SortingMode, FilteringMode, SortDirection,ActionType, } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
-import { loadData, updateData } from 'ka-table/actionCreators';
+import {deleteRow, loadData, updateData } from 'ka-table/actionCreators';
 import { search, updateFilterRowValue } from 'ka-table/actionCreators';
 import { kaDateUtils } from 'ka-table/utils';
 import { hideLoading, showLoading } from 'ka-table/actionCreators';
@@ -31,9 +31,55 @@ const CustomDateFilterEditor = ({
 };
 
 
+const DeleteRow: React.FC<ICellTextProps> = ({
+    dispatch, rowKeyValue
+  }) => {
+   return (
+      <button
+        className='delete-row-column-button'
+        onClick={() => {
+            
+            async function deleteLaureate(){
+                if(window.confirm("Are you sure?")){
+                    dispatch(deleteRow(rowKeyValue))
+                    const url = "http://localhost:8000/api/deleteNobelPrize/"+rowKeyValue
+                    console.log(url)
+                    const token = localStorage.getItem("token");
+                await axios.delete(url, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }}).then(response => {
+                        console.log(response)
+                    }).catch(error =>{
+                        console.log("getting categories ERROR")
+                        console.log(error.message)
+                    })
+                }
+            }
+            deleteLaureate();
+        }}
+      >delete</button>
+   );
+  };
+
+  const EditRow: React.FC<ICellTextProps> = ({
+    dispatch, rowKeyValue
+  }) => {
+    const [laureateId, setLaureateId] = useState()
+   return (
+      <button
+        className='edit-row-column-button'
+        onClick={() => {
+            window.location.replace("/editNobelPrize/"+rowKeyValue);
+        }}
+      >edit</button>
+   );
+  };
 
 
 const TablePage: React.FC = () => {
+
+    
     const [tableProps, changeTableProps] = useState( {
         columns: [
             { key: 'column1', title: 'Name', dataType: DataType.String },
@@ -43,7 +89,8 @@ const TablePage: React.FC = () => {
             { key: 'column5', title: 'PrizeAdjusted', dataType: DataType.Int, style:{textAlign:'center',} },
             { key: 'column6', title: 'Motivation', dataType: DataType.String },
             { key: 'column7', title: 'Wiki', dataType: DataType.String },
-    
+            { key: ':delete', width: 70, style: { textAlign: 'center' } },
+            { key: ':edit', width: 70, style: { textAlign: 'center' } },
         ],
         singleAction: loadData(),
         rowKeyField: 'id',
@@ -66,7 +113,6 @@ const TablePage: React.FC = () => {
             })
             let json = res;
             const jsonArr = [];
-    
             for (let i = 0; i < json.length; i++) {
                 const prize = json[i]
                 {
@@ -78,6 +124,7 @@ const TablePage: React.FC = () => {
                         column5: prize.prize_adjusted,
                         column6: prize.motivation,
                         column7: prize.wikipedia,
+                        id: prize.id
                     })
                 }
             }
@@ -86,12 +133,32 @@ const TablePage: React.FC = () => {
           }
     };
 
+   
     return (
-        
         <Table
-            {...tableProps}
-            dispatch={dispatch}
-        />
+        {...tableProps}
+        childComponents={{
+          cellText: {
+            content: (props) => {
+              switch (props.column.key){
+                case ':delete': return <DeleteRow {...props}/>;
+                case ':edit': return <EditRow {...props}/>;
+              }
+            }
+          },
+          filterRowCell: {
+              content:(props) =>{
+                  switch (props.column.key){
+                      case ':delete': return <></>;
+                      case ':edit': return <></>;
+                      case 'column6': return <></>;
+                      case 'column7': return <></>;
+                  }
+              }
+          }
+        }}
+        dispatch={dispatch}
+      />
     );
 };
 

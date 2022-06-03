@@ -9,7 +9,7 @@ const Laureates = () => {
         <Wrapper>
             <div>
                 <nav>
-                    <h1>Information on Nobel Prize Winners</h1>
+                    <h1>Information of Nobel Prize Winners</h1>
                 </nav>
                 <div className='content'>
                     <TablePage />

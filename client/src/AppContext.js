@@ -19,7 +19,9 @@ const AppContextProvider = (props) => {
         const json = JSON.stringify({token: `${localStorage.getItem("token")}`})
         localStorage.removeItem("token")
         localStorage.removeItem("user")
+        window.location.replace("/login");
         window.location.reload()
+    
         const {data: res} = await axios.post(url, json, {
             headers: {
                 'Content-Type': 'application/json'
