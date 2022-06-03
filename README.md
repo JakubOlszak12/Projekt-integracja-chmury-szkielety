@@ -10,6 +10,8 @@ IN SERVER DIRECTORY:
 3. ```php artisan key:generate```
    ```php artisan jwt:secret```
 4. ```php artisan migrate:fresh -seed```
+
+
 IN CLIENT DIRECTORY
 1. ```npm install ka-table --force```
 # START
