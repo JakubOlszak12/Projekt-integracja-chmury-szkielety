@@ -63,7 +63,6 @@ const Navbar = () => {
 
                 <RightContainer>
                     <NavbarLinkContainer>
-                        
                         <NavbarLink to='/login'>
                         <button className='btn btn-danger' onClick={handleLogout}>
                             Wyloguj się

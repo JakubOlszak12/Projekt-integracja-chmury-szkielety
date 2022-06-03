@@ -8,8 +8,10 @@ import Laureates from "./components/Laureates"
 import Prizes from "./components/Prizes"
 import {AppContextProvider} from "./AppContext";
 import Charts from "./components/Charts";
-
-
+import AddLaureate from "./components/AddLaureate"
+import AddNobelPrize from "./components/AddNobelPrize"
+import EditNobelPrize from "./components/EditPrize"
+import EditLaureate from "./components/EditLaureate"
 function App() {
     const user = localStorage.getItem("token")
     return (
